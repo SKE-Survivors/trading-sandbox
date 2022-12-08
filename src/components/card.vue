@@ -1,0 +1,38 @@
+<script>
+
+export default {
+    props: [
+        'tradingCurrencies',
+        'symbol',
+        'value',
+    ],
+
+}
+</script>
+<template>
+    <div id="card">
+        <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em;" />
+        <h1>{{ tradingCurrencies }}</h1>
+        <h2>{{ symbol }} {{ value }}</h2>
+    </div>
+
+</template>
+<style>
+#card {
+    background: #DFC2F2;
+    background-image: linear-gradient(to right, #ffffb3, #ffe6e6);
+    background-attachment: fixed;
+    background-size: cover;
+
+    box-shadow: 0 15px 30px 1px grey;
+    background: rgba(255, 255, 255, 0.90);
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5% auto 5% auto;
+    max-width: 90%;
+    padding: 7px 10px 5px 10px;
+}
+</style>
