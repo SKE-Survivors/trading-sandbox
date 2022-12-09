@@ -3,7 +3,9 @@ import Card from "./components/card.vue"
 import { UserController } from './server/controller/user.controller';
 
 let userController = new UserController("config")
-let userTaco = userController.createNewUser("Taco")
+
+const user = await userController.getUserData(9281)
+const balance = await userController.getBalance(9281)
 
 export default {
   components: {
@@ -11,7 +13,9 @@ export default {
   },
   data() {
     return {
-      userId: userTaco,
+      userId: user["id"],
+      username: user["username"],
+      balance: balance,
       user: userController,
       currency: {
         BTCUSD: null,
@@ -90,9 +94,9 @@ export default {
       const rate = this.rateDeterminer(currency)
       this.sell.baseAsset = (quoteAsset * Number(rate)).toFixed(5)
     },
-    commitTransaction(currency, quoteAsset, baseAsset, flag) {
+    async commitTransaction(currency, quoteAsset, baseAsset, flag) {
       const baseQuoteCurrencies = currency.split("-")
-      const balance = this.user.getBalace(this.userId)
+      const balance = this.balance
 
       let quoteCurrency, baseCurrency
       if (flag === "buy") {
@@ -116,14 +120,16 @@ export default {
           "quote": quoteAsset,
           "base": baseAsset
         })
-        this.user.updateUserBalance(this.userId, quoteCurrency, balance[quoteCurrency]["amount"] - quoteAsset)
-        this.user.updateUserBalance(this.userId, baseCurrency, balance[baseCurrency]["amount"] + baseAsset)
+        await this.user.updateUserBalance(this.userId, quoteCurrency, balance[quoteCurrency]["amount"] - quoteAsset)
+        await this.user.updateUserBalance(this.userId, baseCurrency, balance[baseCurrency]["amount"] + baseAsset)
+        await this.user.addUserTransaction(this.userId, flag, currency, quoteAsset, baseAsset)
+        this.balance = await this.user.getBalance(this.userId)
       }
       else {
         console.log("Not enough funds!!!")
       }
 
-      console.log(this.user.getBalace(this.userId))
+      console.log(await this.user.getBalance(this.userId))
     }
 
   }
@@ -157,13 +163,13 @@ export default {
 
     </div> -->
     <div class="col" style="">
-      <Card :tradingCurrencies="'BTC/USD'" :symbol="'$'" :value="currency.BTCUSD"/>
+      <Card :tradingCurrencies="'BTC/USD'" :symbol="'$'" :value="currency.BTCUSD" />
     </div>
     <div class="col" style="">
-      <Card :tradingCurrencies="'ETH/USD'" :symbol="'$'" :value="currency.ETHUSD"/>
+      <Card :tradingCurrencies="'ETH/USD'" :symbol="'$'" :value="currency.ETHUSD" />
     </div>
     <div class="col" style="">
-      <Card :tradingCurrencies="'ETH/BTC'" :symbol="'B'" :value="currency.ETHBTC"/>
+      <Card :tradingCurrencies="'ETH/BTC'" :symbol="'B'" :value="currency.ETHBTC" />
     </div>
   </div>
   <div class="row" style="width: 100%; ">
@@ -210,10 +216,10 @@ export default {
   <div class="row" style="width: 100%;">
     <div id="card">
       <p>
-        {{ this.user.getUserData(userId) }}
+        {{ username }}
       </p>
       <p>
-        {{ this.user.getBalace(userId) }}
+        {{ balance }}
       </p>
     </div>
   </div>

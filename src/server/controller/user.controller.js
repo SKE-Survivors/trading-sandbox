@@ -1,5 +1,6 @@
 // import {DBAdapter} from "../adapter/db.adapter"
-import {User} from "../model/user"
+import axios from "axios"
+import { User } from "../model/user"
 
 // Instead of getting it from db or memory
 // Will shoot to database API
@@ -8,38 +9,52 @@ import {User} from "../model/user"
 // must be change to just 'id' later since the API is an actual
 // database that can use find functionalities
 export class UserController {
-    constructor(config) {
-        // const db = new DBAdapter(config)
-        // db.connect()
-    }
+  constructor(config) {
+    this.url = "http://localhost:3000/user/"
+  }
 
-    getUserData(user) {
-        return user.username
-    }
+  async getUserData(userId) {
+    var res = await axios.get(`${this.url + userId}`)
+    return res["data"]
+  }
 
-    getBalace(user) {
-        return user.balance
-    }
+  async getBalance(userId) {
+    var res = await axios.get(`${this.url + userId}`)
+    return res["data"]["balance"]
+  }
 
-    getSpecificBalance(user, currency) {
-        return user.balance[currency]
-    }
+  async getSpecificBalance(userId, currency) {
+    var res = await axios.get(`${this.url + userId}`)
+    return res["data"]["balance"][currency]
+  }
 
-    getTransactionsHistory(user){
-        return user.transactions
-    }
+  async getTransactionsHistory(userId) {
+    var res = await axios.get(`${this.url + userId}`)
+    return res["data"]["transaction"]
+  }
 
-    createNewUser(username) {
-        return new User(username)
-    }
+  async updateUserBalance(userId, currency, amount) {
+    var res = await axios.get(`${this.url + userId}`)
+    const resBody = res["data"]
+    resBody["balance"][currency]["amount"] = amount
+    await axios.put(`${this.url + userId}`, resBody)
+  }
 
-    updateUserBalance(user, currency, amount) {
-        console.log(amount)
-        console.log(user.balance)
-        user.updateBalance(currency, amount)
-    }
-
-    addUserTransaction(user,transaction, currency, quoteAsset, baseAsset) {
-        user.addTransaction(transaction, currency, quoteAsset, baseAsset)
-    }
+  async addUserTransaction(
+    userId,
+    transaction,
+    currency,
+    quoteAsset,
+    baseAsset
+  ) {
+    var res = await axios.get(`${this.url + userId}`)
+    const resBody = res["data"]
+    resBody["transactions"].push({
+      transaction: transaction,
+      currency: currency,
+      quoteAsset: quoteAsset,
+      baseeAsset: baseAsset,
+    })
+    await axios.put(`${this.url + userId}`, resBody)
+  }
 }

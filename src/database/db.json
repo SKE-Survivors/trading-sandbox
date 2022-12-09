@@ -1,0 +1,57 @@
+{
+  "user": [
+    {
+      "id": 9281,
+      "username": "userTaco",
+      "email": "user.taco@email.com",
+      "password": "this is totally encrpted password",
+      "token": "a real token",
+      "balance": {
+        "usd": {
+          "amount": 9903,
+          "name": "USD"
+        },
+        "btc": {
+          "amount": "00.000760.001980.00291",
+          "name": "BTC"
+        },
+        "eth": {
+          "amount": 0,
+          "name": "ETH"
+        }
+      },
+      "transactions": [
+        {
+          "transaction": "buy",
+          "currency": "btc-usd",
+          "quoteAsset": 0,
+          "baseeAsset": 0
+        },
+        {
+          "transaction": "buy",
+          "currency": "btc-usd",
+          "quoteAsset": 2,
+          "baseeAsset": "0.00012"
+        },
+        {
+          "transaction": "buy",
+          "currency": "btc-usd",
+          "quoteAsset": 13,
+          "baseeAsset": "0.00076"
+        },
+        {
+          "transaction": "buy",
+          "currency": "btc-usd",
+          "quoteAsset": 34,
+          "baseeAsset": "0.00198"
+        },
+        {
+          "transaction": "buy",
+          "currency": "btc-usd",
+          "quoteAsset": 50,
+          "baseeAsset": "0.00291"
+        }
+      ]
+    }
+  ]
+}
