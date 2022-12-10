@@ -1,5 +1,6 @@
 <script>
-import Card from "./components/card.vue"
+import Card from "./components/Card.vue"
+import Transactor from "./components/Transactor.vue"
 import { UserController } from './server/controller/user.controller';
 
 let userController = new UserController("config")
@@ -9,7 +10,8 @@ const balance = await userController.getBalance(9281)
 
 export default {
   components: {
-    Card
+    Card,
+    Transactor
   },
   data() {
     return {
@@ -21,15 +23,10 @@ export default {
         BTCUSD: null,
         ETHUSD: null,
         ETHBTC: null,
+        BNBUSD: null
       },
-      buy: {
-        currency: "btc-usd",
-        // cuurency to paid
-        quoteAsset: 0,
-        // currency that will get
-        baseAsset: 0
-      },
-      sell: {
+      transactionFlag: "Buy", 
+      transaction: {
         currency: "btc-usd",
         // cuurency to paid
         quoteAsset: 0,
@@ -67,12 +64,15 @@ export default {
 
       this.currency.ETHBTC = Number(c).toFixed(2);
     });
+    
+    connectToWebSocket("bnbusdt").addEventListener('message', e => {
 
+      let data = JSON.parse(e.data) || {};
+      let { s, c } = data;
 
-  },
-  computed: {
-  },
-  mounted() {
+      this.currency.BNBUSD = Number(c).toFixed(2);
+    });
+
 
   },
   methods: {
@@ -84,35 +84,31 @@ export default {
           return this.currency.ETHUSD
       }
     },
-    buyCoin(currency, quoteAsset) {
-      console.log("Buy " + currency + " for " + quoteAsset)
+    PreviewCoin(flag, currency, quoteAsset) {
+      console.log(flag + " " + currency + " for " + quoteAsset)
       const rate = this.rateDeterminer(currency)
-      this.buy.baseAsset = (quoteAsset / Number(rate)).toFixed(5)
-    },
-    sellCoin(currency, quoteAsset) {
-      console.log("Sell " + currency + " for " + quoteAsset)
-      const rate = this.rateDeterminer(currency)
-      this.sell.baseAsset = (quoteAsset * Number(rate)).toFixed(5)
+      if (flag == "Buy") {
+        this.transaction.baseAsset = (quoteAsset / Number(rate)).toFixed(5)
+      } else if (flag == "Sell") {
+        this.transaction.baseAsset = (quoteAsset * Number(rate)).toFixed(5)
+      }
     },
     async commitTransaction(currency, quoteAsset, baseAsset, flag) {
       const baseQuoteCurrencies = currency.split("-")
       const balance = this.balance
 
       let quoteCurrency, baseCurrency
-      if (flag === "buy") {
+      if (flag === "Buy") {
         quoteCurrency = baseQuoteCurrencies[1]
         baseCurrency = baseQuoteCurrencies[0]
 
-        this.buy.quoteAsset = 0
-        this.buy.baseAsset = 0
-      } else if (flag === "sell") {
+      } else if (flag === "Sell") {
         quoteCurrency = baseQuoteCurrencies[0]
         baseCurrency = baseQuoteCurrencies[1]
-
-        this.sell.quoteAsset = 0
-        this.sell.baseAsset = 0
-
+        
       }
+      this.transaction.quoteAsset = 0
+      this.transaction.baseAsset = 0
 
       if (balance[quoteCurrency]["amount"] >= quoteAsset) {
         console.log({
@@ -120,8 +116,8 @@ export default {
           "quote": quoteAsset,
           "base": baseAsset
         })
-        await this.user.updateUserBalance(this.userId, quoteCurrency, balance[quoteCurrency]["amount"] - quoteAsset)
-        await this.user.updateUserBalance(this.userId, baseCurrency, balance[baseCurrency]["amount"] + baseAsset)
+        await this.user.updateUserBalance(this.userId, quoteCurrency, Number(balance[quoteCurrency]["amount"]) - Number(quoteAsset))
+        await this.user.updateUserBalance(this.userId, baseCurrency, Number(balance[baseCurrency]["amount"]) + Number(baseAsset))
         await this.user.addUserTransaction(this.userId, flag, currency, quoteAsset, baseAsset)
         this.balance = await this.user.getBalance(this.userId)
       }
@@ -131,88 +127,34 @@ export default {
 
       console.log(await this.user.getBalance(this.userId))
     }
-
   }
 }
 </script>
 
 <template>
-  <div class="row" style="width: 100%; height: 20%;">
-    <!-- <div class="col" style="">
-      <div id="card">
-        <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em;" />
-        <h1>BTC/USD</h1>
-        <h2>$ {{ currency.BTCUSD }}</h2>
+  <div class="row" style="width: 100%; height: 20%; margin: 0%;">
+    <div class="col scroller">
+      <div class="col" style="">
+        <Card :tradingCurrencies="'BTC/USD'" :symbol="'$'" :value="currency.BTCUSD" />
       </div>
-    </div>
-    
-    <div class="col" style="">
-      <div id="card">
-        <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em;" />
-        <h1>ETH/USD</h1>
-        <h2>$ {{ currency.ETHUSD }}</h2>
+      <div class="col" style="">
+        <Card :tradingCurrencies="'ETH/USD'" :symbol="'$'" :value="currency.ETHUSD" />
       </div>
-
-    </div>
-    <div class="col" style="">
-      <div id="card">
-        <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em;" />
-        <h1>ETH/BTC</h1>
-        <h2>B {{ currency.ETHBTC }}</h2>
+      <div class="col" style="">
+        <Card :tradingCurrencies="'BNB/USD'" :symbol="'$'" :value="currency.BNBUSD" />
       </div>
-
-    </div> -->
-    <div class="col" style="">
-      <Card :tradingCurrencies="'BTC/USD'" :symbol="'$'" :value="currency.BTCUSD" />
-    </div>
-    <div class="col" style="">
-      <Card :tradingCurrencies="'ETH/USD'" :symbol="'$'" :value="currency.ETHUSD" />
-    </div>
-    <div class="col" style="">
-      <Card :tradingCurrencies="'ETH/BTC'" :symbol="'B'" :value="currency.ETHBTC" />
-    </div>
-  </div>
-  <div class="row" style="width: 100%; ">
-    <div class="col">
-
-      <div id="transactor">
-        <select required name="currency" v-model="buy.currency">
-          <option value="btc-usd">BTC/USD</option>
-          <option value="eth-usd">ETH/USD</option>
-          <option value="eth-btc">ETH/BTC</option>
-        </select>
-        <br>
-        <br>
-        <p>Buy: {{ buy.quoteAsset }} {{ buy.currency.split("-")[1] }}</p>
-        <input type="number" v-model.number="buy.quoteAsset" @change="buyCoin(buy.currency, buy.quoteAsset)" />
-        <br>
-        <br>
-        <p>Got: {{ buy.baseAsset }} {{ buy.currency.split("-")[0] }}</p>
-        <br>
-        <button class="btn btn-outline-dark"
-          @click="commitTransaction(buy.currency, buy.quoteAsset, buy.baseAsset, 'buy')">Confirm</button>
-      </div>
-    </div>
-    <div class="col">
-      <div id="transactor">
-        <select required name="currency" v-model="sell.currency">
-          <option value="btc-usd">BTC/USD</option>
-          <option value="eth-usd">ETH/USD</option>
-          <option value="eth-btc">ETH/BTC</option>
-        </select>
-        <br>
-        <br>
-        <p>Sell: {{ sell.quoteAsset }} {{ sell.currency.split("-")[0] }}</p>
-        <input type="number" v-model.number="sell.quoteAsset" @change="sellCoin(sell.currency, sell.quoteAsset)" />
-        <br>
-        <br>
-        <p>Got: {{ sell.baseAsset }} {{ sell.currency.split("-")[1] }}</p>
-        <br>
-        <button class="btn btn-outline-dark"
-          @click="commitTransaction(sell.currency, sell.quoteAsset, sell.baseAsset, 'sell')">Confirm</button>
+      <div class="col" style="">
+        <Card :tradingCurrencies="'ETH/BTC'" :symbol="'B'" :value="currency.ETHBTC" />
       </div>
     </div>
   </div>
+
+  <div class="row" style="width: 100%; margin: 0%">
+    <div class="col">
+      <Transactor :baseAsset="transaction.baseAsset" @preview-coin="PreviewCoin" @commit-transaction="commitTransaction"/>
+    </div>
+  </div>
+  
   <div class="row" style="width: 100%;">
     <div id="card">
       <p>
@@ -239,5 +181,10 @@ export default {
   margin: 5% auto 5% auto;
   max-width: 80%;
   padding: 5%;
+}
+
+.scroller {
+  overflow-x: scroll;
+  display: flex;
 }
 </style>

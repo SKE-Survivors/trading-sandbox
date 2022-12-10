@@ -53,7 +53,7 @@ export class UserController {
       transaction: transaction,
       currency: currency,
       quoteAsset: quoteAsset,
-      baseeAsset: baseAsset,
+      baseAsset: baseAsset,
     })
     await axios.put(`${this.url + userId}`, resBody)
   }

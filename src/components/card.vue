@@ -31,8 +31,9 @@ export default {
     justify-items: center;
     border-radius: 5px;
     overflow: hidden;
-    margin: 5% auto 5% auto;
-    max-width: 90%;
+    margin: 5% 10px 5% 10px;
+    width: 90%;
+    /* height: 150px; */
     padding: 7px 10px 5px 10px;
 }
 </style>

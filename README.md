@@ -2,6 +2,18 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Run the project
+
+2 steps to run this project
+
+- go to src/database and run
+
+```sh
+json-server --watch db.json
+```
+
+- then run npm run normally
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).

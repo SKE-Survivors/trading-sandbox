@@ -8,16 +8,20 @@
       "token": "a real token",
       "balance": {
         "usd": {
-          "amount": 9903,
+          "amount": 9450.32655,
           "name": "USD"
         },
         "btc": {
-          "amount": "00.000760.001980.00291",
+          "amount": 0.0138,
           "name": "BTC"
         },
         "eth": {
           "amount": 0,
           "name": "ETH"
+        },
+        "bnb": {
+          "amount": 0,
+          "name": "BNB"
         }
       },
       "transactions": [
@@ -25,31 +29,115 @@
           "transaction": "buy",
           "currency": "btc-usd",
           "quoteAsset": 0,
-          "baseeAsset": 0
+          "baseAsset": 0
         },
         {
-          "transaction": "buy",
-          "currency": "btc-usd",
-          "quoteAsset": 2,
-          "baseeAsset": "0.00012"
-        },
-        {
-          "transaction": "buy",
-          "currency": "btc-usd",
-          "quoteAsset": 13,
-          "baseeAsset": "0.00076"
-        },
-        {
-          "transaction": "buy",
-          "currency": "btc-usd",
-          "quoteAsset": 34,
-          "baseeAsset": "0.00198"
-        },
-        {
-          "transaction": "buy",
+          "transaction": "Buy",
           "currency": "btc-usd",
           "quoteAsset": 50,
-          "baseeAsset": "0.00291"
+          "baseAsset": "0.00290"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 23,
+          "baseAsset": "0.00133"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 23,
+          "baseAsset": "0.00133"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 23,
+          "baseAsset": "0.00133"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 45,
+          "baseAsset": "0.00261"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 23,
+          "baseAsset": "0.00133"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 23,
+          "baseAsset": "0.00133"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 34,
+          "baseAsset": "0.00197"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 34,
+          "baseAsset": "0.00197"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 34,
+          "baseAsset": "0.00197"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 45,
+          "baseAsset": "0.00261"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 56,
+          "baseAsset": "0.00325"
+        },
+        {
+          "transaction": "Sell",
+          "currency": "btc-usd",
+          "quoteAsset": 0.005,
+          "baseAsset": "86.16825"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 56,
+          "baseAsset": "0.00325"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 199,
+          "baseAsset": "0.01156"
+        },
+        {
+          "transaction": "Sell",
+          "currency": "btc-usd",
+          "quoteAsset": 0.01,
+          "baseAsset": "172.15830"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 90,
+          "baseAsset": "0.00523"
+        },
+        {
+          "transaction": "Buy",
+          "currency": "btc-usd",
+          "quoteAsset": 50,
+          "baseAsset": "0.00290"
         }
       ]
     }
