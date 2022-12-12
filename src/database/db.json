@@ -5,14 +5,13 @@
       "username": "userTaco",
       "email": "user.taco@email.com",
       "password": "this is totally encrpted password",
-      "token": "a real token",
       "balance": {
         "usd": {
-          "amount": 9450.32655,
+          "amount": 16941.42,
           "name": "USD"
         },
         "btc": {
-          "amount": 0.0138,
+          "amount": 1.59033,
           "name": "BTC"
         },
         "eth": {
@@ -23,123 +22,54 @@
           "amount": 0,
           "name": "BNB"
         }
-      },
-      "transactions": [
-        {
-          "transaction": "buy",
-          "currency": "btc-usd",
-          "quoteAsset": 0,
-          "baseAsset": 0
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 50,
-          "baseAsset": "0.00290"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 23,
-          "baseAsset": "0.00133"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 23,
-          "baseAsset": "0.00133"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 23,
-          "baseAsset": "0.00133"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 45,
-          "baseAsset": "0.00261"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 23,
-          "baseAsset": "0.00133"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 23,
-          "baseAsset": "0.00133"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 34,
-          "baseAsset": "0.00197"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 34,
-          "baseAsset": "0.00197"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 34,
-          "baseAsset": "0.00197"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 45,
-          "baseAsset": "0.00261"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 56,
-          "baseAsset": "0.00325"
-        },
-        {
-          "transaction": "Sell",
-          "currency": "btc-usd",
-          "quoteAsset": 0.005,
-          "baseAsset": "86.16825"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 56,
-          "baseAsset": "0.00325"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 199,
-          "baseAsset": "0.01156"
-        },
-        {
-          "transaction": "Sell",
-          "currency": "btc-usd",
-          "quoteAsset": 0.01,
-          "baseAsset": "172.15830"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 90,
-          "baseAsset": "0.00523"
-        },
-        {
-          "transaction": "Buy",
-          "currency": "btc-usd",
-          "quoteAsset": 50,
-          "baseAsset": "0.00290"
-        }
-      ]
+      }
     }
+  ],
+  "transactions": [
+    {
+      "id": 2222,
+      "user_id": 9281,
+      "timestamp": 1670833068,
+      "type": "limit",
+      "order": "finished",
+      "status": "buy",
+      "symbol": "btc-usd",
+      "quote_currency": "usd",
+      "quote_asset": 0,
+      "base_currency": "btc",
+      "base_asset": 0
+    },
+    {
+      "id": 17,
+      "user_id": 9281,
+      "timestamp": 1670836111,
+      "type": "market",
+      "order": "finished",
+      "status": "Sell",
+      "symbol": "btc-usd",
+      "quote_currency": "btc",
+      "quote_asset": 1,
+      "base_currency": "usd",
+      "base_asset": 16941.42
+    },
+    {
+      "id": 2842,
+      "user_id": 9281,
+      "timestamp": 1670836579,
+      "type": "market",
+      "order": "finished",
+      "status": "Buy",
+      "symbol": "btc-usd",
+      "quote_currency": "usd",
+      "quote_asset": 10000,
+      "base_currency": "btc",
+      "base_asset": 0.59033
+    }
+  ],
+  "pairs": [
+    "btc-usd",
+    "eth-usd",
+    "bnb-usd",
+    "eth-btc"
   ]
 }

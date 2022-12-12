@@ -4,20 +4,46 @@ export default {
     props: [
         'tradingCurrencies',
         'symbol',
-        'value',
     ],
+    data() {
+        return {
+            displayCurrency: this.tradingCurrencies.replace("-", "/").toUpperCase(),
+            value: 0
+        }
+    },
+    created() {
+        let currency
+        function connectToWebSocket(currency) {
+
+            return new WebSocket('wss://stream.binance.com:9443/ws/' + currency + '@miniTicker');
+        }
+    
+        if (this.tradingCurrencies.includes("usd")) {
+            currency = this.tradingCurrencies.replace("usd", "usdt")
+        } else {
+            currency = this.tradingCurrencies
+        }
+
+        connectToWebSocket(currency.replace("-", "")).addEventListener('message', e => {
+
+            let data = JSON.parse(e.data) || {};
+            let { s, c } = data;
+
+            this.value = Number(c).toFixed(2);
+        });
+    }
 
 }
 </script>
 <template>
     <div id="card">
         <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em;" />
-        <h1>{{ tradingCurrencies }}</h1>
+        <h1>{{ displayCurrency }}</h1>
         <h2>{{ symbol }} {{ value }}</h2>
     </div>
 
 </template>
-<style>
+<style scoped>
 #card {
     background: #DFC2F2;
     background-image: linear-gradient(to right, #ffffb3, #ffe6e6);
