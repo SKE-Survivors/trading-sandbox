@@ -2,7 +2,7 @@ export class User {
   constructor(username) {
     this.username = username
     this.balance = {
-      usd: {
+      usdt: {
         amount: 10000,
       },
       btc: {
@@ -15,7 +15,7 @@ export class User {
     this.transactions = [
       {
         transaction: "buy",
-        currency: "btc-usd",
+        currency: "btc-usdt",
         // cuurency to paid
         quoteAsset: 0,
         // currency that will get

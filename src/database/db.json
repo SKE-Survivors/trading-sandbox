@@ -6,9 +6,9 @@
       "email": "user.taco@email.com",
       "password": "this is totally encrpted password",
       "balance": {
-        "usd": {
+        "usdt": {
           "amount": 16941.42,
-          "name": "USD"
+          "name": "USDT"
         },
         "btc": {
           "amount": 1.59033,
@@ -28,13 +28,13 @@
   "transactions": [
     {
       "id": 2222,
-      "user_id": 9281,
+      "user_id": 9281, 
       "timestamp": 1670833068,
       "type": "limit",
       "order": "finished",
       "status": "buy",
-      "symbol": "btc-usd",
-      "quote_currency": "usd",
+      "symbol": "btc-usdt",
+      "quote_currency": "usdt",
       "quote_asset": 0,
       "base_currency": "btc",
       "base_asset": 0
@@ -46,10 +46,10 @@
       "type": "market",
       "order": "finished",
       "status": "Sell",
-      "symbol": "btc-usd",
+      "symbol": "btc-usdt",
       "quote_currency": "btc",
       "quote_asset": 1,
-      "base_currency": "usd",
+      "base_currency": "usdt",
       "base_asset": 16941.42
     },
     {
@@ -59,17 +59,17 @@
       "type": "market",
       "order": "finished",
       "status": "Buy",
-      "symbol": "btc-usd",
-      "quote_currency": "usd",
+      "symbol": "btc-usdt",
+      "quote_currency": "usdt",
       "quote_asset": 10000,
       "base_currency": "btc",
       "base_asset": 0.59033
     }
   ],
   "pairs": [
-    "btc-usd",
-    "eth-usd",
-    "bnb-usd",
+    "btc-usdt",
+    "eth-usdt",
+    "bnb-usdt",
     "eth-btc"
   ]
 }
