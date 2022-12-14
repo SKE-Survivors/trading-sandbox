@@ -2,9 +2,9 @@
   <h1>{{ config.symbol }}</h1>
   <h3>interval: {{ config.interval }}</h3>
   <div>
-    <button @click="setSymbol('btcusdt')">btc-usd</button>
-    <button @click="setSymbol('ethusdt')">eth-usd</button>
-    <button @click="setSymbol('bnbusdt')">bnb-usd</button>
+    <button @click="setSymbol('btcusdt')">btc-usdt</button>
+    <button @click="setSymbol('ethusdt')">eth-usdt</button>
+    <button @click="setSymbol('bnbusdt')">bnb-usdt</button>
     <button @click="setSymbol('ethbtc')">eth-btc</button>
     <button @click="setInterval('1m')">1m</button>
     <button @click="setInterval('5m')">5m</button>
@@ -14,7 +14,7 @@
   <div v-if="error">error: {{ error }}</div>
   <div v-else-if="!candleSeries">Loading Chart...</div>
 
-  <div v-show="candleSeries && !error" id="chart"></div>
+  <div v-show="candleSeries && !error" class="chart" ref="chart"></div>
 </template>
 
 <script>
@@ -106,7 +106,19 @@ export default {
     },
   },
   mounted() {
-    this.chart = LightweightCharts.createChart("chart", chartStyle);
+    this.chart = LightweightCharts.createChart(this.$refs.chart, {
+      width: this.$refs.chart.innerWidth,
+      height: this.$refs.chart.innerHeight,
+      ...chartStyle,
+    });
+
+    // resize observer (native JS)
+    const ro = new ResizeObserver((entries) => {
+      const cr = entries[0].contentRect;
+      this.chart.resize(cr.width, cr.height);
+    });
+    ro.observe(this.$refs.chart);
+
     this.candleSeries = this.chart.addCandlestickSeries(candleSeriesStyle);
     this.fetchChart();
   },
@@ -134,8 +146,6 @@ function toLocalTime(originalTime) {
 }
 
 const chartStyle = {
-  width: 700,
-  height: 600,
   layout: {
     backgroundColor: "#253248",
     textColor: "rgba(255, 255, 255, 0.9)",
@@ -170,4 +180,9 @@ const candleSeriesStyle = {
 </script>
 
 <style>
+.chart {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+}
 </style>
