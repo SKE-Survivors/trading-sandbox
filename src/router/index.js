@@ -10,8 +10,8 @@ const routes = [
     component: TradingView,
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/profile",
+    name: "profile",
     component: ProfileView,
   },
   // catchall 404

@@ -2,7 +2,7 @@
   <div class="chart" id="tradingview"></div>
 </template>
 
-<script type="text/javascript">
+<script>
 function loadChart(symbol) {
   let chart = new TradingView.widget({
     autosize: true,
