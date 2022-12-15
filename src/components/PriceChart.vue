@@ -180,9 +180,4 @@ const candleSeriesStyle = {
 </script>
 
 <style>
-.chart {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-}
 </style>

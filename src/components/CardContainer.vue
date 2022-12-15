@@ -15,13 +15,18 @@ export default {
     const totalPair = await axios.get("http://localhost:3000/pairs");
     this.pairs = totalPair["data"];
   },
+  methods: {
+    emitPair(pair) {
+      this.$emit("selected", pair);
+    },
+  },
 };
 </script>
 
 <template>
   <div class="col scroller">
-    <div class="col" v-for="currency in pairs" :key="currency">
-      <Card :tradingCurrencies="currency" :symbol="'◑'" />
+    <div class="col" v-for="pair in pairs" :key="pair">
+      <Card :tradingCurrencies="pair" :symbol="'◑'" @click="emitPair(pair)" />
     </div>
   </div>
 </template>
