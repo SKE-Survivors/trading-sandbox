@@ -1,17 +1,5 @@
 # trading-sandbox
 
-## Run the project
-
-2 steps to run this project
-
-- go to src/database and run
-
-```sh
-json-server --watch db.json
-```
-
-- then run npm run normally
-
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/)

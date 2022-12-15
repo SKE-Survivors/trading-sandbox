@@ -1,5 +1,6 @@
 import { createApp } from "vue"
 import App from "./App.vue"
+import router from './router'
 
 // import "./assets/main.css"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -13,4 +14,4 @@ import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons"
 /* add icons to the library */
 library.add(faCircleHalfStroke)
 
-createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app")
+createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(router).mount("#app")
