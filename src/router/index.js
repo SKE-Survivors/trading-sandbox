@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import TradingView from "@/views/TradingView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import LoginView from "@/views/auth/LoginView.vue";
+import SignupView from "@/views/auth/SignupView.vue";
 
 const routes = [
   {
@@ -13,6 +15,16 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: ProfileView,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignupView,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
   // catchall 404
   {
