@@ -1,24 +1,17 @@
 <script>
 import axios from "axios";
-
-// todo: use APIs instead
 import { UserController } from "../server/controller/user.controller";
 
-let userController = new UserController("config");
-
-const user = await userController.getUserData(9281);
-const balance = await userController.getBalance(9281);
+let userController = new UserController(localStorage.token, localStorage.email)
 
 export default {
+  props: ["symbol"],
   data() {
     return {
-      userId: user["id"],
-      username: user["username"],
-      balance: balance,
       user: userController,
       transactionFlag: "Buy",
+      type: "market",
       transaction: {
-        currency: "btc-usdt",
         // cuurency to paid
         quoteAsset: 0,
         // currency that will get
@@ -34,7 +27,7 @@ export default {
     async rateDeterminer(currency) {
       const url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
       const res = await axios.get(
-        url + currency.replace("-", "").toUpperCase()
+        url + currency.replace("/", "").toUpperCase()
       );
       return res["data"]["lastPrice"];
     },
@@ -62,27 +55,25 @@ export default {
         base: baseAsset,
       });
       await this.user.updateUserBalance(
-        this.userId,
         quoteCurrency,
-        Number(balance[quoteCurrency]["amount"]) - Number(quoteAsset)
+        Number(balance[quoteCurrency]) - Number(quoteAsset)
       );
       await this.user.updateUserBalance(
-        this.userId,
         baseCurrency,
-        Number(balance[baseCurrency]["amount"]) + Number(baseAsset)
+        Number(balance[baseCurrency]) + Number(baseAsset)
       );
       await this.user.addUserTransaction(
-        this.userId,
+        "finished",
         flag,
         currency,
         Number(quoteAsset),
         Number(baseAsset)
       );
-      this.balance = await this.user.getBalance(this.userId);
+      this.balance = await this.user.getBalance();
     },
     async commitTransaction(currency, quoteAsset, baseAsset, flag) {
-      const baseQuoteCurrencies = currency.split("-");
-      const balance = this.balance;
+      const baseQuoteCurrencies = currency.split("/");
+      const balance = await this.user.getBalance();
 
       let quoteCurrency, baseCurrency;
       if (flag === "Buy") {
@@ -95,10 +86,10 @@ export default {
 
       this.resetAsset();
 
-      if (balance[quoteCurrency]["amount"] >= quoteAsset) {
+      if (balance[quoteCurrency] >= quoteAsset) {
         this.updateTransaction(
           flag,
-          currency,
+          currency.replace("/","-"),
           balance,
           quoteAsset,
           baseAsset,
@@ -109,7 +100,7 @@ export default {
         console.log("Not enough funds!!!");
       }
 
-      console.log(await this.user.getBalance(this.userId));
+      console.log(await this.user.getBalance());
     },
   },
 };
@@ -117,11 +108,11 @@ export default {
 
 <template>
   <div id="transactor">
-    <select required name="transaction.currency" v-model="transaction.currency">
-      <option value="btc-usdt">BTC/USDT</option>
-      <option value="eth-usdt">ETH/USDT</option>
-      <option value="bnb-usdt">BNB/USDT</option>
-      <option value="eth-btc">ETH/BTC</option>
+    <p>{{symbol.toUpperCase()}}</p>
+    <select required name="type" v-model="type">
+      <option value="market">Market</option>
+      <option value="limit">Limit</option>
+      <option value="stop">Stop</option>
     </select>
     <select
       required
@@ -138,8 +129,8 @@ export default {
       {{ transactionFlag }}: {{ transaction.quoteAsset }}
       {{
         transactionFlag == "Buy"
-          ? transaction.currency.split("-")[1]
-          : transaction.currency.split("-")[0]
+          ? symbol.split("/")[1]
+          : symbol.split("/")[0]
       }}
     </p>
     <input
@@ -148,7 +139,7 @@ export default {
       @change="
         PreviewCoin(
           this.transactionFlag,
-          this.transaction.currency,
+          this.symbol,
           this.transaction.quoteAsset
         )
       "
@@ -159,8 +150,8 @@ export default {
       Got: {{ transaction.baseAsset }}
       {{
         transactionFlag == "Buy"
-          ? transaction.currency.split("-")[0]
-          : transaction.currency.split("-")[1]
+          ? symbol.split("/")[0]
+          : symbol.split("/")[1]
       }}
     </p>
     <br />
@@ -168,7 +159,7 @@ export default {
       class="btn btn-outline-dark"
       @click="
         commitTransaction(
-          this.transaction.currency,
+          this.symbol.toLowerCase(),
           this.transaction.quoteAsset,
           this.transaction.baseAsset,
           this.transactionFlag

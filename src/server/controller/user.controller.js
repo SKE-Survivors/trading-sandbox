@@ -8,58 +8,85 @@ import axios from "axios"
 // must be change to just 'id' later since the API is an actual
 // database that can use find functionalities
 export class UserController {
-  constructor(config) {
-    this.url = "http://localhost:3000/"
+  constructor(token=null, email=null) {
+    this.url = import.meta.env.VITE_HOST
+    this.token = token
+    this.email = email
   }
 
-  async getUserData(userId) {
-    var res = await axios.get(`${this.url + "user/" + userId}`)
-    return res["data"]
+  async signup(email, username, pwd, cpwd) {
+    let body = {
+        "email": email,
+        "username": username,
+        "password": pwd,
+        "confirm-password": cpwd    
+    }
+    await axios.post(`${this.url + "/api/auth/signup"}`, body)
+    const res = await this.login(email, pwd)
+    return res
   }
 
-  async getBalance(userId) {
-    var res = await axios.get(`${this.url + "user/" + userId}`)
-    return res["data"]["balance"]
-  }
-
-  async getSpecificBalance(userId, currency) {
-    var res = await axios.get(`${this.url + "user/" + userId}`)
-    return res["data"]["balance"][currency]
-  }
-
-  async getTransactionsHistory(userId) {
-    var res = await axios.get(`${this.url + "transactions?user_id=" + userId}`)
-    return res["data"]
-  }
-
-  async updateUserBalance(userId, currency, amount) {
-    var res = await axios.get(`${this.url + "user/" + userId}`)
+  async login(email, pwd) {
+    let body = {
+      "email": email,
+      "password": pwd
+    }
+    const res = await axios.post(`${this.url + "/api/auth/login"}`, body)
     const resBody = res["data"]
-    resBody["balance"][currency]["amount"] = amount
-    await axios.put(`${this.url + "user/" + userId}`, resBody)
+    this.token = resBody["MESSAGE"]["token"]
+    this.email = email
+    console.log("LL", this.email, this.token)
+    return resBody["MESSAGE"]["token"]
+  }
+
+  async getUserData() {
+    console.log(this.email)
+    var res = await axios.get(`${this.url + "/api/auth/user?email=" + this.email}`)
+    return res["data"]["data"]
+  }
+
+  async getBalance() {
+    var res = await this.getUserData()
+    return res["wallet"]
+  }
+
+  // async getSpecificBalance(userId, currency) {
+  //   var res = await axios.get(`${this.url + "user/" + userId}`)
+  //   return res["data"]["balance"][currency]
+  // }
+
+  async getTransactionsHistory() {
+    var res = await this.getUserData()
+    return res["orders"]
+  }
+
+  async updateUserBalance(currency, amount) {
+    var res = await this.getUserData()
+    res["wallet"][currency] = amount
+    await axios.put(`${this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token}`, res)
   }
 
   async addUserTransaction(
-    userId,
+    status,
     transaction,
     currency,
     quoteAsset,
     baseAsset
   ) {
     let body = {
-      id: Math.floor(Math.random() * (9999 - 999 + 1)),
-      user_id: userId,
-      timestamp: Math.floor(Date.now() / 1000),
-      type: "market",
-      order: "finished",
-      status: transaction,
-      symbol: currency,
-      quote_currency: transaction == "Buy" ? currency.split("-")[1] : currency.split("-")[0],
-      quote_asset: quoteAsset,
-      base_currency: transaction == "Buy" ? currency.split("-")[0] : currency.split("-")[1],
-      base_asset: baseAsset
-
+      status: status,
+      type: transaction,
+      pair_symbol: currency,
+      input_token: transaction == "Buy" ? currency.split("-")[1] : currency.split("-")[0],
+      input_amount: quoteAsset,
+      output_token: transaction == "Buy" ? currency.split("-")[0] : currency.split("-")[1],
+      output_amount: baseAsset
     }
-    await axios.post(`${this.url + "transactions"}`, body)
+    console.log("BB", body)
+    await axios.post(`${this.url + "/api/trading/order?email=" + this.email + "&token=" + this.token}`, body)
+    
+    // var res = await this.getUserData()
+    // res["orders"].push(body)
+    // await axios.put(`${this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token}`, res)
   }
 }

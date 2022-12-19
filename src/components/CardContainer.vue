@@ -12,8 +12,8 @@ export default {
     };
   },
   async created() {
-    const totalPair = await axios.get("http://localhost:3000/pairs");
-    this.pairs = totalPair["data"];
+    const totalPair = await axios.get(import.meta.env.VITE_HOST+"/api/info/pairs");
+    this.pairs = totalPair["data"]["MESSAGE"];
   },
   methods: {
     emitPair(pair) {

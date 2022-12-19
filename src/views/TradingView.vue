@@ -6,7 +6,8 @@ import PriceChart2 from "@/components/PriceChart2.vue";
 export default {
   data() {
     return {
-      selectedPair: "BTCUSDT",
+      selectedPair: "BTC/USDT",
+      userController: this.user 
     };
   },
   components: {
@@ -16,24 +17,27 @@ export default {
   },
   methods: {
     handleCardSelected(pair) {
-      this.selectedPair = pair.replace("-", "");
+      this.selectedPair = pair.replace("-", "/");
     },
   },
+  props: [
+    "user"
+  ]
 };
 </script>
 
 
 <template>
   <div class="row" style="width: 100%; height: 20%; margin: 0%">
-    <CardContainer @selected="handleCardSelected" />
+    <CardContainer @selected="handleCardSelected"/>
   </div>
 
   <div class="row" style="width: 100%; margin: 0%">
     <div class="col">
-      <PriceChart2 :symbol="selectedPair" />
+      <PriceChart2 :symbol="selectedPair.replace('/', '')" />
     </div>
     <div class="col">
-      <Transactor />
+      <Transactor :symbol="selectedPair"/>
     </div>
   </div>
 </template>

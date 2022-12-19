@@ -5,6 +5,7 @@ import NotFoundView from "@/views/NotFoundView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import SignupView from "@/views/auth/SignupView.vue";
 
+
 const routes = [
   {
     path: "/",
