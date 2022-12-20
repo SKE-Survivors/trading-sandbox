@@ -7,6 +7,8 @@ export default {
   data() {
     return {
       profile: null,
+      coin: null,
+      order: null
     };
   },
   async created() {
@@ -18,5 +20,15 @@ export default {
 
 <template>
   <h1>This is profile page</h1>
-  <p>{{ profile }}</p>
+  <p>Email: {{ profile["email"] }}</p>
+  <p>Username: {{ profile["username"] }}</p>
+  <p>Wallet: </p>
+  <p v-for="coin, coinId in profile['wallet']" :key="coin">
+  <p>{{ coinId }}: {{ coin }}</p>
+  </p>
+  <p>Orders: </p>
+  <p v-for="order in profile['orders']" :key="order">
+  <p>id: {{ order.id }} status: {{ order.status }} type: {{ buy }} quote: {{ order.input_token }} value: {{ order.input_amount }} base: {{ order.output_token }} value: {{ order.output_amount }}</p>
+  </p>
+
 </template>

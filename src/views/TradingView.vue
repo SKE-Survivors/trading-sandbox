@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       selectedPair: "BTC/USDT",
-      userController: this.user 
+      email: localStorage.email
     };
   },
   components: {
@@ -19,15 +19,13 @@ export default {
     handleCardSelected(pair) {
       this.selectedPair = pair.replace("-", "/");
     },
-  },
-  props: [
-    "user"
-  ]
+  }
 };
 </script>
 
 
 <template>
+  <p>Hello, {{ email }}</p>
   <div class="row" style="width: 100%; height: 20%; margin: 0%">
     <CardContainer @selected="handleCardSelected"/>
   </div>
