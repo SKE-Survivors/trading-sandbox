@@ -28,7 +28,7 @@ export default {
   </p>
   <p>Orders: </p>
   <p v-for="order in profile['orders']" :key="order">
-  <p>id: {{ order.id }} status: {{ order.status }} type: {{ buy }} quote: {{ order.input_token }} value: {{ order.input_amount }} base: {{ order.output_token }} value: {{ order.output_amount }}</p>
+  <p>id: {{ order.id }} status: {{ order.status }} type: {{ order.type }} quote: {{ order.input_token }} value: {{ order.input_amount }} base: {{ order.output_token }} value: {{ order.output_amount }}</p>
   </p>
 
 </template>

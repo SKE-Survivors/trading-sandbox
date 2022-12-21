@@ -110,7 +110,6 @@ export default {
         if (type != "market") {
           quoteAsset = this.transaction.totalSpent
           baseAsset = this.transaction.limit_amount
-          limit = this.transaction.limit
         }
       } else if (flag === "Sell") {
         quoteCurrency = baseQuoteCurrencies[0];
@@ -118,7 +117,6 @@ export default {
         if (type != "market") {
           quoteAsset = this.transaction.limit_amount
           baseAsset = this.transaction.totalSpent
-          limit = this.transaction.limit
         }
       }
 
@@ -141,59 +139,6 @@ export default {
 
       console.log(await this.user.getBalance());
     },
-    // async updateLimitTransaction(
-    //   flag,
-    //   currency,
-    //   limit,
-    //   limitAmount,
-    //   totalSpent,
-    //   type
-    // ) {
-    //   console.log({
-    //     currency: currency,
-    //     limit: limit,
-    //     limitAmount: limitAmount,
-    //     total: totalSpent,
-    //   });
-    //   let status
-    //   if (type == "limit") {
-    //     status = "active"
-    //   } else if (type == "stop") {
-    //     status = "draft"
-    //   }
-    //   await this.user.addUserTransaction(
-    //     status,
-    //     flag,
-    //     currency,
-    //     Number(totalSpent),
-    //     Number(limitAmount)
-    //   );
-    //   this.balance = await this.user.getBalance();
-    // },
-    // async commitLimitTransaction(currency, limit_value, limit_amount_value, flag, type) {
-    //   const baseQuoteCurrencies = currency.split("/");
-    //   const balance = await this.user.getBalance();
-
-    //   let limit = baseQuoteCurrencies[1];
-    //   let total = this.transaction.totalSpent
-
-    //   this.resetAsset();
-
-    //   if (balance[limit] >= limit_value) {
-    //     this.updateLimitTransaction(
-    //       flag,
-    //       currency.replace("/", "-"),
-    //       limit_value,
-    //       limit_amount_value,
-    //       total,
-    //       type
-    //     );
-    //   } else {
-    //     console.log("Not enough funds!!!");
-    //   }
-
-    //   console.log(await this.user.getBalance());
-    // },
   },
 };
 </script>

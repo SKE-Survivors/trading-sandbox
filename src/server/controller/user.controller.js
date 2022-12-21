@@ -82,7 +82,6 @@ export class UserController {
       output_token: transaction == "Buy" ? currency.split("-")[0] : currency.split("-")[1],
       output_amount: baseAsset
     }
-    console.log(body)
     await axios.post(`${this.url + "/api/trading/order?email=" + this.email + "&token=" + this.token}`, body)
     
     // var res = await this.getUserData()
