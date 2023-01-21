@@ -1,16 +1,60 @@
-<script>
-</script>
+<script></script>
+
 <template>
   <nav class="menu">
-    this is menu ->
-    <router-link to="/">Trading</router-link> |
-    <router-link :to="{ name: 'profile' }">Profile</router-link> |
-    <router-link :to="{ name: 'signup'}">Signup</router-link> |
-    <router-link :to="{ name: 'login'}">Login</router-link>
+    <h4 class="menu-item">
+      <router-link :to="{ name: 'trading' }">TradingArena</router-link>
+    </h4>
+
+    <div class="menu-item dropdown" style="float: right">
+      <button class="dropdown-btn">Username<font-awesome-icon :icon="['fa', 'caret-down']" class="mx-2" /></button>
+
+      <div class="dropdown-content">
+        <!-- todo: add menu state -->
+        <router-link class="form-control btn" :to="{ name: 'profile' }">My Profile</router-link>
+        <router-link class="form-control btn" :to="{ name: 'trading' }">Trading</router-link>
+        <router-link class="form-control btn" to="#">About us</router-link>
+        <router-link class="form-control btn" to="#">Helps</router-link>
+        <router-link class="form-control btn" :to="{ name: 'login' }">Login</router-link>
+        <router-link class="form-control btn" to="#">Logout</router-link>
+      </div>
+    </div>
   </nav>
   <router-view />
 </template>
 
 <style>
-/* app main style */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+  border: inherit;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-text-color);
+  border-radius: 8px;
+
+  right: 0;
+  width: 100%;
+  margin-top: -24px;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 </style>
