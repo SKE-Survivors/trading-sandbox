@@ -149,7 +149,7 @@ export default {
   <form class="card">
     <div class="title">
       <img src="@/assets/images/token/bnb-icon.png" alt="" class="token-icon" />
-      <h4>{{ symbol.toUpperCase() }}</h4>
+      <h5>{{ symbol.toUpperCase() }}</h5>
     </div>
 
     <div class="row">
@@ -208,7 +208,7 @@ select {
   height: 60px;
 }
 
-.title img, .title h4{
+.title img, .title h5{
   vertical-align: middle;
   display: inline-block;
   padding: 0 4px;
