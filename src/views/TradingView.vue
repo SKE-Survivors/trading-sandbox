@@ -31,19 +31,14 @@ export default {
   </div>
 
   <div class="row" style="width: 100%; margin: 0%">
-    <div class="col">
+    <div class="col-lg-9 col-sm-12 mb-3">
       <PriceChart2 :symbol="selectedPair.replace('/', '')" />
     </div>
-    <div class="col">
+    <div class="col-lg-3 col-sm-12 mb-3">
       <Transactor :symbol="selectedPair"/>
     </div>
   </div>
 </template>
 
 <style scoped>
-.chart {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-}
 </style>

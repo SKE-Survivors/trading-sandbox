@@ -1,7 +1,7 @@
 <script>
 </script>
 <template>
-  <nav>
+  <nav class="menu">
     this is menu ->
     <router-link to="/">Trading</router-link> |
     <router-link :to="{ name: 'profile' }">Profile</router-link> |

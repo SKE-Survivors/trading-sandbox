@@ -1,0 +1,27 @@
+:root {
+    --font-size: calc(14px + 0.25vw);
+    --border-style: 0.05px solid rgba(255, 255, 255, 0.8);
+}
+
+body {
+  /* background-image: linear-gradient(to right, #4A3080, #276F98, #3CB29A); */
+  background-image: linear-gradient(to right, #242442, #211441, #270a3d);
+  color: white;
+}
+
+.menu {
+  height: 64px;
+  background-image: linear-gradient(to right, #1e594d, #182d48, #251840);
+  border-bottom: var(--border-style);
+}
+
+.card {
+  margin: 4px;
+  padding: 12px;
+
+  background-color: inherit;
+  border: var(--border-style);
+  border-radius: 12px;
+
+  font-size: var(--font-size);
+}

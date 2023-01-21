@@ -12,7 +12,7 @@ export default {
     };
   },
   async created() {
-    const totalPair = await axios.get(import.meta.env.VITE_HOST+"/api/info/pairs");
+    const totalPair = await axios.get(import.meta.env.VITE_HOST + "/api/info/pairs");
     this.pairs = totalPair["data"]["MESSAGE"];
   },
   methods: {
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <template>
-  <div class="col scroller">
+  <div class="scroller my-1 pb-2">
     <div class="col" v-for="pair in pairs" :key="pair">
       <Card :tradingCurrencies="pair" :symbol="'◑'" @click="emitPair(pair)" />
     </div>

@@ -30,4 +30,8 @@ export default {
 </script>
 
 <style scoped>
+.chart {
+  height: 100%;
+  min-height: 70vh;
+}
 </style>
