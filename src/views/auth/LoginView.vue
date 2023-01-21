@@ -69,6 +69,6 @@ export default {
 
 .field-icon {
   float: left;
-  height: calc(var(--font-size) + 8px);
+  height: calc(var(--font-size) + 10px);
 }
 </style>

@@ -28,6 +28,12 @@ body {
   font-size: var(--font-size);
 }
 
+.token-icon {
+  width: calc(42px + 0.25vw);
+  height: auto;
+  margin: 0;
+}
+
 .center {
   text-align: center;
 }

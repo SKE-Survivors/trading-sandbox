@@ -38,43 +38,35 @@ export default {
 <template>
   <div class="card">
     <div class="row">
-      <div class="col-3 text">
+      <div class="col-3">
         <img src="@/assets/images/token/bnb-icon.png" alt="" class="token-icon" />
       </div>
-      <div class="col-5 text">
+      <div class="col-5">
         {{ displayCurrency }}
         {{ value }}
       </div>
-      <div class="col-4 text center">{{ percentChange }}%</div>
+      <div class="col-4 center">{{ percentChange }}%</div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.token-icon {
-  width: calc(42px + 0.25vw);
-  height: auto;
-  margin: 0;
-}
-
 .card {
   height: 80px;
   width: 240px;
 
   overflow: hidden;
   cursor: pointer;
-}
 
-.row {
-  height: 100%;
-  text-align: left;
-}
-
-.text {
   font-size: calc(var(--font-size) - 3px);
 
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+.row {
+  height: 100%;
+  text-align: left;
 }
 </style>
