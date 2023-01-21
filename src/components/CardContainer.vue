@@ -24,9 +24,9 @@ export default {
 </script>
 
 <template>
-  <div class="scroller my-1 pb-2">
+  <div class="scroller py-3 px-1">
     <div class="col" v-for="pair in pairs" :key="pair">
-      <Card :tradingCurrencies="pair" :symbol="'◑'" @click="emitPair(pair)" />
+      <Card :tradingCurrencies="pair" @click="emitPair(pair)" class="mx-1"/>
     </div>
   </div>
 </template>

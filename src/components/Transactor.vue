@@ -141,6 +141,10 @@ export default {
 
       console.log(await this.user.getBalance());
     },
+    getTokenUrl(n) {
+      let currencies = this.symbol.toLowerCase().split("/");
+      return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
+    },
   },
 };
 </script>
@@ -148,8 +152,9 @@ export default {
 <template>
   <form class="card">
     <div class="title">
-      <img src="@/assets/images/token/bnb-icon.png" alt="" class="token-icon" />
-      <h5>{{ symbol.toUpperCase() }}</h5>
+      <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
+      <h5 class="v-center">{{ symbol.toUpperCase() }}</h5>
+      <!-- <img :src="getTokenUrl(1)" alt="" class="token-icon" /> -->
     </div>
 
     <div class="row">
@@ -178,7 +183,7 @@ export default {
 
     <div v-if="type != 'market'">
       <label>Price: {{ transaction.limit }} {{ symbol.split("/")[1] }}</label>
-      
+
       <input type="number" v-model.number="transaction.limit" @change="PreviewCoinWithLimit(this.transactionFlag, this.transaction.limit)" class="form-control input-field"/>
 
       <label>Amount: {{ transaction.limit_amount }} {{ symbol.split("/")[0] }}</label>
@@ -187,7 +192,7 @@ export default {
 
       <label>Total: {{ transaction.totalSpent }} {{ symbol.split("/")[1] }}</label>
     </div>
-      
+
     <button class="form-control btn" @click="commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)">Confirm</button>
   </form>
 </template>
@@ -208,12 +213,9 @@ select {
   height: 60px;
 }
 
-.title img, .title h5{
+.title img, .title h5 {
   vertical-align: middle;
   display: inline-block;
-  padding: 0 4px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
+  margin: 0 4px;
 }
 </style>

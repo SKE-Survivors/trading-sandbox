@@ -1,7 +1,8 @@
 <script>
 import axios from "axios";
+
 export default {
-  props: ["tradingCurrencies", "symbol"],
+  props: ["tradingCurrencies"],
   data() {
     return {
       displayCurrency: this.tradingCurrencies.replace("-", "/").toUpperCase(),
@@ -32,20 +33,27 @@ export default {
       this.midPrice = Number(w).toFixed(2);
     });
   },
+  methods: {
+    getTokenUrl(n) {
+      let currencies = this.tradingCurrencies.split("-");
+      return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
+    },
+  },
 };
 </script>
 
 <template>
-  <div class="card">
+  <div class="card v-center">
     <div class="row">
-      <div class="col-3">
-        <img src="@/assets/images/token/bnb-icon.png" alt="" class="token-icon" />
+      <div class="col-5 v-center">
+        <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
+        <img :src="getTokenUrl(1)" alt="" class="token-icon v-center" />
       </div>
-      <div class="col-5">
+      <div class="col-4 v-center">
         {{ displayCurrency }}
         {{ value }}
       </div>
-      <div class="col-4 center">{{ percentChange }}%</div>
+      <div class="col-3 center v-center">{{ percentChange }}%</div>
     </div>
   </div>
 </template>
@@ -59,14 +67,24 @@ export default {
   cursor: pointer;
 
   font-size: calc(var(--font-size) - 3px);
-
-  top: 0;
-  bottom: 0;
-  margin: auto;
 }
 
 .row {
   height: 100%;
   text-align: left;
+}
+
+.col-3, .col-4, .col-5 {
+  padding: 0;
+}
+
+.token-icon {
+  position: absolute;
+  margin-left: 6px;
+}
+
+img:nth-child(2) {
+  left: 36px;
+  z-index: -1;
 }
 </style>

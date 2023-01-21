@@ -24,7 +24,7 @@ export default {
 </script>
 
 <template>
-  <p>Hello, {{ email }}</p>
+  <!-- <p>Hello, {{ email }}</p> -->
   <div class="row" style="width: 100%; height: 20%; margin: 0%">
     <CardContainer @selected="handleCardSelected" />
   </div>
