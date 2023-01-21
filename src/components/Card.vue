@@ -11,12 +11,17 @@ export default {
       midPrice: 0,
     };
   },
+  computed: {
+    isNegative() {
+      return this.percentChange < 0;
+    },
+  },
   async created() {
     const url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
     const res = await axios.get(
       url + this.tradingCurrencies.replace("-", "").toUpperCase()
     );
-    this.value = Number(res["data"]["lastPrice"]).toFixed(2);
+    this.setValue(Number(res["data"]["lastPrice"]));
     this.percentChange = Number(res["data"]["priceChangePercent"]).toFixed(2);
     this.midPrice = Number(res["data"]["weightedAvgPrice"]).toFixed(2);
 
@@ -28,7 +33,7 @@ export default {
       let data = JSON.parse(e.data) || {};
       let { c, P, w } = data;
 
-      this.value = Number(c).toFixed(2);
+      this.setValue(Number(c));
       this.percentChange = Number(P).toFixed(2);
       this.midPrice = Number(w).toFixed(2);
     });
@@ -37,6 +42,15 @@ export default {
     getTokenUrl(n) {
       let currencies = this.tradingCurrencies.split("-");
       return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
+    },
+    setValue(v) {
+      if (v > 1000) {
+        this.value = v.toFixed(2);
+      } else if (v > 1) {
+        this.value = v.toFixed(3);
+      } else {
+        this.value = v.toFixed(5);
+      }
     },
   },
 };
@@ -53,7 +67,9 @@ export default {
         {{ displayCurrency }}
         {{ value }}
       </div>
-      <div class="col-3 center v-center">{{ percentChange }}%</div>
+      <div class="col-3 center v-center text-green" :class="{ 'text-red': isNegative }">
+        {{ percentChange }}%
+      </div>
     </div>
   </div>
 </template>
@@ -74,7 +90,9 @@ export default {
   text-align: left;
 }
 
-.col-3, .col-4, .col-5 {
+.col-3,
+.col-4,
+.col-5 {
   padding: 0;
 }
 
@@ -86,5 +104,13 @@ export default {
 img:nth-child(2) {
   left: 36px;
   z-index: -1;
+}
+
+.text-green {
+  color: #269981;
+}
+
+.text-red {
+  color: #ed303e;
 }
 </style>
