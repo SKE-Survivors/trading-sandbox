@@ -71,14 +71,10 @@ export default {
 }
 
 .text {
-  font-size: calc(var(--font-size) - 2px);
+  font-size: calc(var(--font-size) - 3px);
 
   top: 0;
   bottom: 0;
   margin: auto;
-}
-
-.center {
-  text-align: center;
 }
 </style>

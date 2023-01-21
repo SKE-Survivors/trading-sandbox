@@ -11,8 +11,10 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 /* import specific icons */
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons"
+import { fab } from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library */
 library.add(faCircleHalfStroke)
+library.add(fab)
 
 import "./assets/main.css"
 

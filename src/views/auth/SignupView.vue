@@ -1,7 +1,7 @@
 <script>
-import {UserController} from "../../server/controller/user.controller"
+import { UserController } from "../../server/controller/user.controller";
 
-let userController = new UserController()
+let userController = new UserController();
 
 export default {
   data() {
@@ -9,15 +9,20 @@ export default {
       email: null,
       username: null,
       password: null,
-      confirmPassword: null
-    }
+      confirmPassword: null,
+    };
   },
   methods: {
     async sendForm() {
-      var res = await userController.signup(this.email, this.username, this.password, this.confirmPassword)
-      localStorage.token = res
-      localStorage.email = this.email
-      
+      var res = await userController.signup(
+        this.email,
+        this.username,
+        this.password,
+        this.confirmPassword
+      );
+      localStorage.token = res;
+      localStorage.email = this.email;
+
       // const storage = useStorage();
 
       // storage.clearStorageSync()
@@ -26,26 +31,39 @@ export default {
       // this.$storage.clearStorageSync()
       // this.$storage.setStorageSync("token", res)
       // console.log(this.$storage.Key("ts_token"))
-      this.$router.push('/') 
-    }
-  }
-}
-
+      this.$router.push("/");
+    },
+  },
+};
 </script>
+
 <template>
-  <h1>This is signup page</h1>
-  <div>
-    <form>
-      <label for="email">Email:</label><br>
-      <input type="text" id="email" name="email" v-model="email"><br>
-      <label for="username">Username:</label><br>
-      <input type="text" id="username" name="username" v-model="username"><br>
-      <label for="pwd">Password:</label><br>
-      <input type="password" id="pwd" name="pwd" v-model="password"><br>
-      <label for="cpwd">Confirm Password:</label><br>
-      <input type="password" id="cpwd" name="cpwd" v-model="confirmPassword"><br>
-      <br>
-      <button type="button" @click="sendForm()">Confirm</button>
+  <div class="container">
+    <form class="card my-5">
+      <h1>Sign up</h1>
+
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" v-model="email" class="form-control input-field"/>
+
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" v-model="username" class="form-control input-field"/>
+
+      <label for="pwd">Password</label>
+      <input type="password" id="pwd" name="pwd" v-model="password" class="form-control input-field"/>
+      
+      <label for="cpwd">Confirm Password</label>
+      <input type="password" id="cpwd" name="cpwd" v-model="confirmPassword" class="form-control input-field"/>
+
+      <button type="button" @click="sendForm()" class="form-control btn mt-5">Confirm</button>
+      <small class="center">Already have an account? <router-link :to="{ name: 'login' }">Login</router-link></small>
     </form>
   </div>
 </template>
+
+<style scoped>
+.card {
+  margin: auto;
+  width: 30%;
+  min-width: 400px;
+}
+</style>

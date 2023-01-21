@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content center">
     <h2>404</h2>
     <h3>Page Not Found</h3>
   </div>
@@ -12,6 +12,5 @@ export default {};
 <style scoped>
 .content {
   padding: 5%;
-  text-align: center;
 }
 </style>
