@@ -35,7 +35,6 @@ export class UserController {
     const resBody = res["data"]
     this.token = resBody["MESSAGE"]["token"]
     this.email = email
-    console.log("LL", this.email, this.token)
     return resBody["MESSAGE"]["token"]
   }
 
@@ -49,11 +48,6 @@ export class UserController {
     var res = await this.getUserData()
     return res["wallet"]
   }
-
-  // async getSpecificBalance(userId, currency) {
-  //   var res = await axios.get(`${this.url + "user/" + userId}`)
-  //   return res["data"]["balance"][currency]
-  // }
 
   async getTransactionsHistory() {
     var res = await this.getUserData()
@@ -75,11 +69,9 @@ export class UserController {
   ) {
     let body = {
       status: status,
-      type: transaction,
+      flag: transaction,
       pair_symbol: currency,
-      input_token: transaction == "Buy" ? currency.split("-")[1] : currency.split("-")[0],
       input_amount: quoteAsset,
-      output_token: transaction == "Buy" ? currency.split("-")[0] : currency.split("-")[1],
       output_amount: baseAsset
     }
     await axios.post(`${this.url + "/api/trading/order?email=" + this.email + "&token=" + this.token}`, body)
