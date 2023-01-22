@@ -12,7 +12,6 @@ export default {
   },
   methods: {
     async sendForm() {
-      console.log("AAAA")
       let res = await userController.login(this.email, this.password)
       localStorage.token = res
       localStorage.email = this.email

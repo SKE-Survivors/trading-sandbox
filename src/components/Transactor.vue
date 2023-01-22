@@ -63,7 +63,8 @@ export default {
       baseAsset,
       quoteCurrency,
       baseCurrency,
-      type
+      type,
+      limit
     ) {
       console.log({
         currency: currency,
@@ -81,19 +82,21 @@ export default {
           Number(balance[baseCurrency]) + Number(baseAsset)
         );
       }
-      let status = "finished"
-      if (type == "limit") {
-        status = "active"
-      } else if (type == "stop") {
-        status = "draft"
+      if (type == "stop") {
+        await this.user.sendTrigger(flag, currency, Number(quoteAsset), Number(baseAsset), limit)
+      } else {
+        let status = "finished"
+        if (type == "limit") {
+          status = "active"
+        }
+        await this.user.addUserTransaction(
+          status,
+          flag,
+          currency,
+          Number(quoteAsset),
+          Number(baseAsset)
+        );
       }
-      await this.user.addUserTransaction(
-        status,
-        flag,
-        currency,
-        Number(quoteAsset),
-        Number(baseAsset)
-      );
       this.balance = await this.user.getBalance();
     },
     async commitTransaction(currency, flag, type) {
@@ -102,6 +105,7 @@ export default {
 
       let quoteCurrency, baseCurrency;
       let quoteAsset, baseAsset, limit
+      limit = this.transaction.limit
       quoteAsset = this.transaction.quoteAsset
       baseAsset = this.transaction.baseAsset
       if (flag === "Buy") {
@@ -120,8 +124,7 @@ export default {
         }
       }
 
-      this.resetAsset();
-
+      
       if (balance[quoteCurrency] >= quoteAsset) {
         this.updateTransaction(
           flag,
@@ -131,13 +134,15 @@ export default {
           baseAsset,
           quoteCurrency,
           baseCurrency,
-          type
-        );
-      } else {
+          type,
+          limit
+          );
+        } else {
         console.log("Not enough funds!!!");
       }
-
+      
       console.log(await this.user.getBalance());
+      this.resetAsset();
     },
   },
 };

@@ -35,7 +35,6 @@ export class UserController {
     const resBody = res["data"]
     this.token = resBody["MESSAGE"]["token"]
     this.email = email
-    console.log("LL", this.email, this.token)
     return resBody["MESSAGE"]["token"]
   }
 
@@ -75,17 +74,28 @@ export class UserController {
   ) {
     let body = {
       status: status,
-      type: transaction,
+      flag: transaction,
       pair_symbol: currency,
-      input_token: transaction == "Buy" ? currency.split("-")[1] : currency.split("-")[0],
       input_amount: quoteAsset,
-      output_token: transaction == "Buy" ? currency.split("-")[0] : currency.split("-")[1],
       output_amount: baseAsset
     }
     await axios.post(`${this.url + "/api/trading/order?email=" + this.email + "&token=" + this.token}`, body)
-    
-    // var res = await this.getUserData()
-    // res["orders"].push(body)
-    // await axios.put(`${this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token}`, res)
+  }
+
+  async sendTrigger(
+    transaction,
+    currency,
+    quoteAsset,
+    baseAsset,
+    stop_price,
+  ) {
+    let body = {
+      flag: transaction,
+      pair_symbol: currency,
+      input_amount: quoteAsset,
+      output_amount: baseAsset,
+      stop_price: stop_price
+    }
+    await axios.post(`${this.url + "/api/trading/trigger?email=" + this.email + "&token=" + this.token}`, body)
   }
 }
