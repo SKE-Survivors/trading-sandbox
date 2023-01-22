@@ -39,7 +39,6 @@ export class UserController {
   }
 
   async getUserData() {
-    console.log(this.email)
     var res = await axios.get(`${this.url + "/api/auth/user?email=" + this.email}`)
     return res["data"]["data"]
   }

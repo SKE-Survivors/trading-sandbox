@@ -12,11 +12,19 @@ export default {
   },
   methods: {
     async sendForm() {
-      let res = await userController.login(this.email, this.password);
-      localStorage.token = res;
-      localStorage.email = this.email;
-      this.$router.push("/");
+      try {
+
+        let res = await userController.login(this.email, this.password);
+        localStorage.token = res;
+        localStorage.email = this.email;
+        this.$router.push("/");
+      } catch (error) {
+        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+      }
     },
+    temporalyAlert(){
+      window.alert("features coming soon.")
+    }
   },
 };
 </script>
@@ -26,10 +34,10 @@ export default {
       <h1>Login</h1>
 
       <label for="email">Email</label>
-      <input type="text" id="email" name="email" v-model="email" class="form-control input-field"/>
+      <input type="text" id="email" name="email" v-model="email" class="form-control input-field" />
 
       <label for="pwd">Password</label>
-      <input type="password" id="pwd" name="pwd" v-model="password" class="form-control input-field"/>
+      <input type="password" id="pwd" name="pwd" v-model="password" class="form-control input-field" />
 
       <div class="row my-3">
         <div class="col center" style="margin-top: 12px">
@@ -43,12 +51,12 @@ export default {
       </div>
 
       <div class="center hint-color my-3">----------- or -----------</div>
-      <button type="button" class="form-control btn" style="background-color: #4267B2; color:white;">
-        <font-awesome-icon :icon="['fab', 'square-facebook']" class="field-icon"/>
+      <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #4267B2; color:white;">
+        <font-awesome-icon :icon="['fab', 'square-facebook']" class="field-icon" />
         Login with Facebook
       </button>
-      <button type="button" class="form-control btn" style="background-color: #DF4A32; color:white;">
-        <font-awesome-icon :icon="['fab', 'google']" class="field-icon"/>
+      <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #DF4A32; color:white;">
+        <font-awesome-icon :icon="['fab', 'google']" class="field-icon" />
         Login with Google
       </button>
     </form>

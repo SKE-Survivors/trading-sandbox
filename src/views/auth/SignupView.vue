@@ -14,24 +14,28 @@ export default {
   },
   methods: {
     async sendForm() {
-      var res = await userController.signup(
-        this.email,
-        this.username,
-        this.password,
-        this.confirmPassword
-      );
-      localStorage.token = res;
-      localStorage.email = this.email;
-
-      // const storage = useStorage();
-
-      // storage.clearStorageSync()
-      // storage.setStorageSync("token", res)
-      // console.log(storage.key())
-      // this.$storage.clearStorageSync()
-      // this.$storage.setStorageSync("token", res)
-      // console.log(this.$storage.Key("ts_token"))
-      this.$router.push("/");
+      try {
+        var res = await userController.signup(
+          this.email,
+          this.username,
+          this.password,
+          this.confirmPassword
+        );
+        localStorage.token = res;
+        localStorage.email = this.email;
+  
+        // const storage = useStorage();
+  
+        // storage.clearStorageSync()
+        // storage.setStorageSync("token", res)
+        // console.log(storage.key())
+        // this.$storage.clearStorageSync()
+        // this.$storage.setStorageSync("token", res)
+        // console.log(this.$storage.Key("ts_token"))
+        this.$router.push("/");
+      } catch (error) {
+        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+      }
     },
   },
 };

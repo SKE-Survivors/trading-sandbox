@@ -100,54 +100,64 @@ export default {
       this.balance = await this.user.getBalance();
     },
     async commitTransaction(currency, flag, type) {
-      const baseQuoteCurrencies = currency.split("/");
-      const balance = await this.user.getBalance();
+      try {
 
-      let quoteCurrency, baseCurrency;
-      let quoteAsset, baseAsset, limit
-      limit = this.transaction.limit
-      quoteAsset = this.transaction.quoteAsset
-      baseAsset = this.transaction.baseAsset
-      if (flag === "Buy") {
-        quoteCurrency = baseQuoteCurrencies[1];
-        baseCurrency = baseQuoteCurrencies[0];
-        if (type != "market") {
-          quoteAsset = this.transaction.totalSpent
-          baseAsset = this.transaction.limit_amount
+
+        if (!localStorage.token) {
+          window.alert("Log in first to do transaction")
+          return
         }
-      } else if (flag === "Sell") {
-        quoteCurrency = baseQuoteCurrencies[0];
-        baseCurrency = baseQuoteCurrencies[1];
-        if (type != "market") {
-          quoteAsset = this.transaction.limit_amount
-          baseAsset = this.transaction.totalSpent
+        const baseQuoteCurrencies = currency.split("/");
+        const balance = await this.user.getBalance();
+
+        let quoteCurrency, baseCurrency;
+        let quoteAsset, baseAsset, limit
+        limit = this.transaction.limit
+        quoteAsset = this.transaction.quoteAsset
+        baseAsset = this.transaction.baseAsset
+        if (flag === "Buy") {
+          quoteCurrency = baseQuoteCurrencies[1];
+          baseCurrency = baseQuoteCurrencies[0];
+          if (type != "market") {
+            quoteAsset = this.transaction.totalSpent
+            baseAsset = this.transaction.limit_amount
+          }
+        } else if (flag === "Sell") {
+          quoteCurrency = baseQuoteCurrencies[0];
+          baseCurrency = baseQuoteCurrencies[1];
+          if (type != "market") {
+            quoteAsset = this.transaction.limit_amount
+            baseAsset = this.transaction.totalSpent
+          }
         }
+
+
+        if (balance[quoteCurrency] >= quoteAsset) {
+          this.updateTransaction(
+            flag,
+            currency.replace("/", "-"),
+            balance,
+            quoteAsset,
+            baseAsset,
+            quoteCurrency,
+            baseCurrency,
+            type,
+            limit
+          );
+        } else {
+          console.log("Not enough funds!!!");
+        }
+
+        console.log(await this.user.getBalance());
+        this.resetAsset();
+      } catch (error) {
+        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
       }
-
-
-      if (balance[quoteCurrency] >= quoteAsset) {
-        this.updateTransaction(
-          flag,
-          currency.replace("/", "-"),
-          balance,
-          quoteAsset,
-          baseAsset,
-          quoteCurrency,
-          baseCurrency,
-          type,
-          limit
-        );
-      } else {
-        console.log("Not enough funds!!!");
-      }
-
-      console.log(await this.user.getBalance());
-      this.resetAsset();
     },
-      getTokenUrl(n) {
-        let currencies = this.symbol.toLowerCase().split("/");
-        return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
-      },
+    getTokenUrl(n) {
+      let currencies = this.symbol.toLowerCase().split("/");
+      return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
+    },
   },
 };
 </script>
@@ -168,25 +178,34 @@ export default {
         </select>
       </div>
       <div class="col-4">
-        <select required name="transaction-flag" @change="resetAsset" v-model="transactionFlag" class="form-control input-field">
+        <select required name="transaction-flag" @change="resetAsset" v-model="transactionFlag"
+          class="form-control input-field">
           <option value="Buy">Buy</option>
           <option value="Sell">Sell</option>
         </select>
       </div>
     </div>
     <div v-if="type == 'market'">
-      <label>{{ transactionFlag }}: {{ transaction.quoteAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0] }}</label>
-      <input type="number" v-model.number="transaction.quoteAsset" @change="PreviewCoin(this.transactionFlag, this.symbol, this.transaction.quoteAsset)" class="form-control input-field"/>
-      <label>Got: {{ transaction.baseAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1] }}</label>
+      <label>{{ transactionFlag }}: {{ transaction.quoteAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[1] :
+      symbol.split("/")[0] }}</label>
+      <input type="number" v-model.number="transaction.quoteAsset"
+        @change="PreviewCoin(this.transactionFlag, this.symbol, this.transaction.quoteAsset)"
+        class="form-control input-field" />
+      <label>Got: {{ transaction.baseAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
+      }}</label>
     </div>
     <div v-if="type != 'market'">
       <label>Price: {{ transaction.limit }} {{ symbol.split("/")[1] }}</label>
-      <input type="number" v-model.number="transaction.limit" @change="PreviewCoinWithLimit(this.transactionFlag, this.transaction.limit)" class="form-control input-field"/>
+      <input type="number" v-model.number="transaction.limit"
+        @change="PreviewCoinWithLimit(this.transactionFlag, this.transaction.limit)" class="form-control input-field" />
       <label>Amount: {{ transaction.limit_amount }} {{ symbol.split("/")[0] }}</label>
-      <input type="number" v-model.number="transaction.limit_amount" @change="PreviewCoinWithLimit(this.transactionFlag, (limit_amount = this.limit_amount))" class="form-control input-field"/>
+      <input type="number" v-model.number="transaction.limit_amount"
+        @change="PreviewCoinWithLimit(this.transactionFlag, (limit_amount = this.limit_amount))"
+        class="form-control input-field" />
       <label>Total: {{ transaction.totalSpent }} {{ symbol.split("/")[1] }}</label>
     </div>
-    <button class="form-control btn" @click="commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)">Confirm</button>
+    <button class="form-control btn"
+      @click="commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)">Confirm</button>
   </form>
 </template>
 
