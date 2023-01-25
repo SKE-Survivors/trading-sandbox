@@ -13,13 +13,13 @@ export default {
   methods: {
     async sendForm() {
       try {
-
         let res = await userController.login(this.email, this.password);
         localStorage.token = res;
         localStorage.email = this.email;
         this.$router.push("/");
       } catch (error) {
-        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+        // todo: check what is wrong: email?, pwd?, server?
+        window.alert("Invalid input")
       }
     },
     temporalyAlert(){
@@ -51,10 +51,13 @@ export default {
       </div>
 
       <div class="center hint-color my-3">----------- or -----------</div>
+
+      <!-- todo: login with facebook -->
       <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #4267B2; color:white;">
         <font-awesome-icon :icon="['fab', 'square-facebook']" class="field-icon" />
         Login with Facebook
       </button>
+      <!-- todo: login with google -->
       <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #DF4A32; color:white;">
         <font-awesome-icon :icon="['fab', 'google']" class="field-icon" />
         Login with Google
