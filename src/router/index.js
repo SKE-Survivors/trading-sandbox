@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TradingView from "@/views/TradingView.vue";
 import ProfileView from "@/views/ProfileView.vue";
+import ErrorView from "@/views/ErrorView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import SignupView from "@/views/auth/SignupView.vue";
-
 
 const routes = [
   {
@@ -26,6 +26,14 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/error",
+    name: "error",
+    props: {
+      err: "Our server is currently down at the moment, please come back later.",
+    },
+    component: ErrorView,
   },
   // catchall 404
   {

@@ -12,7 +12,9 @@ export default {
     };
   },
   async created() {
-      this.profile = await userController.getUserData()
+    this.profile = await userController.getUserData().catch(() => {
+      this.$router.push({ name: "login" });
+    });
   },
 }
 
@@ -32,8 +34,4 @@ export default {
       <p>id: {{ order.id }} status: {{ order.status }} type: {{ order.flag }} pair: {{order.pair_symbol}} quote: {{ order.input_amount }} base: {{ order.output_amount }}</p>
     </p>
   </div>
-  <div v-if="profile == null">
-    <p>Please log in to see this page.</p>
-  </div>
-
 </template>
