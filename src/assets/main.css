@@ -11,6 +11,13 @@ body {
   color: white;
 }
 
+.section {
+  background-image: url(@/assets/images/bg-section.png);
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 8px;
+}
+
 .menu {
   height: 64px;
   background-image: linear-gradient(to right, #1e594d, #182d48, #251840);
@@ -55,6 +62,10 @@ body {
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+.right {
+  text-align: right;
 }
 
 form h1 {
