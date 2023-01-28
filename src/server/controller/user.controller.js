@@ -74,10 +74,23 @@ export class UserController {
       output_amount: baseAsset
     }
     await axios.post(`${this.url + "/api/trading/order?email=" + this.email + "&token=" + this.token}`, body)
-    
-    // var res = await this.getUserData()
-    // res["orders"].push(body)
-    // await axios.put(`${this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token}`, res)
+  }
+
+  async sendTrigger(
+    transaction,
+    currency,
+    quoteAsset,
+    baseAsset,
+    stop_price,
+  ) {
+    let body = {
+      flag: transaction,
+      pair_symbol: currency,
+      input_amount: quoteAsset,
+      output_amount: baseAsset,
+      stop_price: stop_price
+    }
+    await axios.post(`${this.url + "/api/trading/trigger?email=" + this.email + "&token=" + this.token}`, body)
   }
 
   async sendTrigger(

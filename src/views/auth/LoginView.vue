@@ -12,18 +12,10 @@ export default {
   },
   methods: {
     async sendForm() {
-      try {
-        let res = await userController.login(this.email, this.password);
-        localStorage.token = res;
-        localStorage.email = this.email;
-        this.$router.push("/");
-      } catch (error) {
-        // todo: check what is wrong: email?, pwd?, server?
-        window.alert("Invalid input")
-      }
-    },
-    temporalyAlert(){
-      window.alert("features coming soon.")
+      let res = await userController.login(this.email, this.password)
+      localStorage.token = res
+      localStorage.email = this.email
+      this.$router.push('/') 
     }
   },
 };
