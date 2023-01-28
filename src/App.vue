@@ -10,7 +10,7 @@ export default {
   methods: {
     async reload() {
       let controller = new UserController(localStorage.token, localStorage.email);
-      this.profile = await controller.getUserData();
+      this.profile = await controller.getUserData(localStorage.email)
     },
   },
   async mounted() {
@@ -41,15 +41,13 @@ export default {
     <div class="menu-item dropdown" style="float: right">
       <button class="dropdown-btn">{{ username || "Menu"}}<font-awesome-icon :icon="['fa', 'caret-down']" class="mx-2" /></button>
 
-      <div class="dropdown-content">
+      <div class="dropdown-content" id="dropdown-content">
         <router-link v-show="profile" class="form-control btn" :to="{ name: 'profile' }">My Profile</router-link>
         <router-link class="form-control btn" :to="{ name: 'trading' }">Trading</router-link>
         <router-link class="form-control btn" to="#">About us</router-link>
         <router-link class="form-control btn" to="#">Helps</router-link>
         <router-link v-show="!profile" class="form-control btn" :to="{ name: 'login' }">Login</router-link>
-
-        <!-- todo: Logout -->
-        <router-link v-show="profile" class="form-control btn" to="#">Logout</router-link>
+        <router-link v-show="profile" class="form-control btn" :to="{ name: 'logout' }">Logout</router-link>
       </div>
     </div>
   </nav>
@@ -61,7 +59,8 @@ export default {
   position: relative;
   display: inline-block;
 
-  min-width: 20%;
+  /* min-width: 20%; */
+  max-width: 25%;
   text-align: right;
 }
 

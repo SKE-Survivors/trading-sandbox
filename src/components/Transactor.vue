@@ -100,59 +100,59 @@ export default {
       this.balance = await this.user.getBalance();
     },
     async commitTransaction(currency, flag, type) {
-      try {
+      // try {
 
 
-        if (!localStorage.token) {
-          window.alert("Log in first to do transaction")
-          return
-        }
-        const baseQuoteCurrencies = currency.split("/");
-        const balance = await this.user.getBalance();
-
-        let quoteCurrency, baseCurrency;
-        let quoteAsset, baseAsset, limit
-        limit = this.transaction.limit
-        quoteAsset = this.transaction.quoteAsset
-        baseAsset = this.transaction.baseAsset
-        if (flag === "Buy") {
-          quoteCurrency = baseQuoteCurrencies[1];
-          baseCurrency = baseQuoteCurrencies[0];
-          if (type != "market") {
-            quoteAsset = this.transaction.totalSpent
-            baseAsset = this.transaction.limit_amount
-          }
-        } else if (flag === "Sell") {
-          quoteCurrency = baseQuoteCurrencies[0];
-          baseCurrency = baseQuoteCurrencies[1];
-          if (type != "market") {
-            quoteAsset = this.transaction.limit_amount
-            baseAsset = this.transaction.totalSpent
-          }
-        }
-
-
-        if (balance[quoteCurrency] >= quoteAsset) {
-          this.updateTransaction(
-            flag,
-            currency.replace("/", "-"),
-            balance,
-            quoteAsset,
-            baseAsset,
-            quoteCurrency,
-            baseCurrency,
-            type,
-            limit
-          );
-        } else {
-          console.log("Not enough funds!!!");
-        }
-
-        console.log(await this.user.getBalance());
-        this.resetAsset();
-      } catch (error) {
-        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+      if (!localStorage.token) {
+        window.alert("Log in first to do transaction")
+        return
       }
+      const baseQuoteCurrencies = currency.split("/");
+      const balance = await this.user.getBalance()
+
+      let quoteCurrency, baseCurrency;
+      let quoteAsset, baseAsset, limit
+      limit = this.transaction.limit
+      quoteAsset = this.transaction.quoteAsset
+      baseAsset = this.transaction.baseAsset
+      if (flag === "Buy") {
+        quoteCurrency = baseQuoteCurrencies[1];
+        baseCurrency = baseQuoteCurrencies[0];
+        if (type != "market") {
+          quoteAsset = this.transaction.totalSpent
+          baseAsset = this.transaction.limit_amount
+        }
+      } else if (flag === "Sell") {
+        quoteCurrency = baseQuoteCurrencies[0];
+        baseCurrency = baseQuoteCurrencies[1];
+        if (type != "market") {
+          quoteAsset = this.transaction.limit_amount
+          baseAsset = this.transaction.totalSpent
+        }
+      }
+
+
+      if (balance[quoteCurrency] >= quoteAsset) {
+        this.updateTransaction(
+          flag,
+          currency.replace("/", "-"),
+          balance,
+          quoteAsset,
+          baseAsset,
+          quoteCurrency,
+          baseCurrency,
+          type,
+          limit
+        );
+      } else {
+        console.log("Not enough funds!!!");
+      }
+
+      console.log(await this.user.getBalance());
+      this.resetAsset();
+      // } catch (error) {
+      //   window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+      // }
     },
     getTokenUrl(n) {
       let currencies = this.symbol.toLowerCase().split("/");

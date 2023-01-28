@@ -16,14 +16,31 @@ export default {
         let res = await userController.login(this.email, this.password);
         localStorage.token = res;
         localStorage.email = this.email;
+        console.log("login", localStorage.email)
         this.$router.push("/");
       } catch (error) {
-        // todo: check what is wrong: email?, pwd?, server?
-        window.alert("Invalid input")
+        let message = ""
+        try {
+          message = error["response"]["data"]["MESSAGE"]
+        } catch (error) {
+          message = "Our server is currently down at the moment, please come back later. We apologize for the inconvenience."
+        }
+        window.alert(message)
       }
     },
     temporalyAlert(){
       window.alert("features coming soon.")
+    },
+    async LoginThirdParty(third_party) {
+      try {
+        let res = await userController.login_third_party(third_party)
+        localStorage.token = res;
+        localStorage.email = this.email;
+        console.log("login", localStorage.email)
+        this.$router.push("/");
+      } catch (error) {
+        window.alert("Somwthing went wrong")
+      }
     }
   },
 };
@@ -53,12 +70,12 @@ export default {
       <div class="center hint-color my-3">----------- or -----------</div>
 
       <!-- todo: login with facebook -->
-      <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #4267B2; color:white;">
-        <font-awesome-icon :icon="['fab', 'square-facebook']" class="field-icon" />
-        Login with Facebook
+      <button type="button" class="form-control btn" @click="LoginThirdParty('github')" style="background-color: black; color:white;">
+        <font-awesome-icon :icon="['fab', 'github']" class="field-icon" />
+        Login with Github
       </button>
       <!-- todo: login with google -->
-      <button type="button" class="form-control btn" @click="temporalyAlert()" style="background-color: #DF4A32; color:white;">
+      <button type="button" class="form-control btn" @click="LoginThirdParty('google')" style="background-color: #DF4A32; color:white;">
         <font-awesome-icon :icon="['fab', 'google']" class="field-icon" />
         Login with Google
       </button>

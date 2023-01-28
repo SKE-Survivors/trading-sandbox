@@ -34,7 +34,13 @@ export default {
         // console.log(this.$storage.Key("ts_token"))
         this.$router.push("/");
       } catch (error) {
-        window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
+        let message = ""
+        try {
+          message = error["response"]["data"]["MESSAGE"]
+        } catch (error) {
+          message = "Our server is currently down at the moment, please come back later. We apologize for the inconvenience."
+        }
+        window.alert(message)
       }
     },
   },

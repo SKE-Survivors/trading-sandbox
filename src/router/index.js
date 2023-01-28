@@ -4,6 +4,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import ErrorView from "@/views/ErrorView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
+import LogoutView from "@/views/auth/LogoutView.vue";
 import SignupView from "@/views/auth/SignupView.vue";
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/logout",
+    name: "logout",
+    component: LogoutView,
   },
   {
     path: "/error",
