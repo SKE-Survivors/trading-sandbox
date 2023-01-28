@@ -39,7 +39,7 @@ export default {
         console.log("login", localStorage.email)
         this.$router.push("/");
       } catch (error) {
-        window.alert("Somwthing went wrong")
+        window.alert("Something went wrong")
       }
     }
   },

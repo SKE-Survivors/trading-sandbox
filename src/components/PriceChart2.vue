@@ -32,6 +32,6 @@ export default {
 <style scoped>
 .chart {
   height: 100%;
-  min-height: 70vh;
+  min-height: 75vh;
 }
 </style>

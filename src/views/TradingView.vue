@@ -29,7 +29,7 @@ export default {
     <CardContainer @selected="handleCardSelected" />
   </div>
 
-  <div id="section" class="row" style="width: 100%; margin: 0%">
+  <div class="row section" style="width: 100%; margin: 0%">
     <div class="col-lg-9 col-sm-12 mb-3">
       <PriceChart2 :symbol="selectedPair.replace('/', '')" />
     </div>
@@ -40,9 +40,4 @@ export default {
 </template>
 
 <style scoped>
-#section {
-  background-image: url(@/assets/images/bg-section.png);
-  background-size: cover;
-  padding-top: 8px;
-}
 </style>

@@ -158,18 +158,18 @@ export default {
       let currencies = this.symbol.toLowerCase().split("/");
       return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
     },
-  },
+  }
 };
 </script>
 
 <template>
   <form class="card">
-    <div class="title">
+    <div class="title my-2">
       <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
       <h5 class="v-center">{{ symbol.toUpperCase() }}</h5>
       <!-- <img :src="getTokenUrl(1)" alt="" class="token-icon" /> -->
     </div>
-    <div class="row">
+    <div class="row mt-1">
       <div class="col-8" style="padding-right:0;">
         <select required name="type" v-model="type" @change="resetAsset" class="form-control input-field">
           <option value="market">Market</option>
@@ -178,34 +178,67 @@ export default {
         </select>
       </div>
       <div class="col-4">
-        <select required name="transaction-flag" @change="resetAsset" v-model="transactionFlag"
-          class="form-control input-field">
+        <select
+          required
+          name="transaction-flag"
+          @change="resetAsset"
+          v-model="transactionFlag"
+          class="form-control input-field"
+        >
           <option value="Buy">Buy</option>
           <option value="Sell">Sell</option>
         </select>
       </div>
     </div>
     <div v-if="type == 'market'">
-      <label>{{ transactionFlag }}: {{ transaction.quoteAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[1] :
-      symbol.split("/")[0] }}</label>
-      <input type="number" v-model.number="transaction.quoteAsset"
-        @change="PreviewCoin(this.transactionFlag, this.symbol, this.transaction.quoteAsset)"
-        class="form-control input-field" />
-      <label>Got: {{ transaction.baseAsset }} {{ transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
-      }}</label>
+      <label
+        >{{ transactionFlag }}: {{ transaction.quoteAsset }}
+        {{
+          transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0]
+        }}</label
+      >
+      <input
+        type="number"
+        v-model.number="transaction.quoteAsset"
+        @change="
+          PreviewCoin(this.transactionFlag, this.symbol, this.transaction.quoteAsset)
+        "
+        class="form-control input-field"
+      />
+      <label
+        >Got: {{ transaction.baseAsset }}
+        {{
+          transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
+        }}</label
+      >
     </div>
     <div v-if="type != 'market'">
       <label>Price: {{ transaction.limit }} {{ symbol.split("/")[1] }}</label>
-      <input type="number" v-model.number="transaction.limit"
-        @change="PreviewCoinWithLimit(this.transactionFlag, this.transaction.limit)" class="form-control input-field" />
+      <input
+        type="number"
+        v-model.number="transaction.limit"
+        @change="PreviewCoinWithLimit(this.transactionFlag, this.transaction.limit)"
+        class="form-control input-field"
+      />
       <label>Amount: {{ transaction.limit_amount }} {{ symbol.split("/")[0] }}</label>
-      <input type="number" v-model.number="transaction.limit_amount"
-        @change="PreviewCoinWithLimit(this.transactionFlag, (limit_amount = this.limit_amount))"
-        class="form-control input-field" />
+      <input
+        type="number"
+        v-model.number="transaction.limit_amount"
+        @change="
+          PreviewCoinWithLimit(this.transactionFlag, (limit_amount = this.limit_amount))
+        "
+        class="form-control input-field"
+      />
       <label>Total: {{ transaction.totalSpent }} {{ symbol.split("/")[1] }}</label>
     </div>
-    <button class="form-control btn"
-      @click="commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)">Confirm</button>
+    <button
+      class="form-control btn"
+      @click="
+        commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)
+      "
+    >
+      Confirm
+    </button>
   </form>
 </template>
 
@@ -216,7 +249,8 @@ export default {
 }
 
 select {
-  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+    no-repeat;
   background-position: calc(100% - 0.75rem) center !important;
 }
 
