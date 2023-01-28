@@ -176,20 +176,14 @@ export default {
 
 <template>
   <form class="card">
-    <div class="title">
+    <div class="title my-2">
       <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
       <h5 class="v-center">{{ symbol.toUpperCase() }}</h5>
       <!-- <img :src="getTokenUrl(1)" alt="" class="token-icon" /> -->
     </div>
-    <div class="row">
-      <div class="col-8" style="padding-right: 0">
-        <select
-          required
-          name="type"
-          v-model="type"
-          @change="resetAsset"
-          class="form-control input-field"
-        >
+    <div class="row mt-1">
+      <div class="col-8" style="padding-right:0;">
+        <select required name="type" v-model="type" @change="resetAsset" class="form-control input-field">
           <option value="market">Market</option>
           <option value="limit">Limit</option>
           <option value="stop">Stop</option>
