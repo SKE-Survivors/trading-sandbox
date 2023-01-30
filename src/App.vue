@@ -59,7 +59,7 @@ export default {
   position: relative;
   display: inline-block;
 
-  /* min-width: 20%; */
+  min-width: 20%;
   max-width: 25%;
   text-align: right;
 }
