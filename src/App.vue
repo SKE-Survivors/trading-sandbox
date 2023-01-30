@@ -1,6 +1,4 @@
 <script>
-import { UserController } from "./server/controller/user.controller";
-
 export default {
   data() {
     return {

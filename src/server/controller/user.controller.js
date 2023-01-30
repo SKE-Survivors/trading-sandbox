@@ -72,25 +72,9 @@ export class UserController {
     return res["data"]["data"]
   }
 
-  async getBalance(email) {
-    var res = await this.getUserData(email)
-    return res["wallet"]
-  }
-
   async getTransactionsHistory(email) {
     var res = await this.getUserData(email)
     return res["orders"]
-  }
-
-  async updateUserBalance(email, token, currency, amount) {
-    var res = await this.getUserData(email)
-    res["wallet"][currency] = amount
-    await axios.put(
-      `${
-        this.url + "/api/auth/user?email=" + email + "&token=" + token
-      }`,
-      res
-    )
   }
 
   async addUserTransaction(
