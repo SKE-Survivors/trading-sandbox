@@ -11,6 +11,7 @@ export default {
     async reload() {
       let controller = new UserController(localStorage.token, localStorage.email);
       this.profile = await controller.getUserData(localStorage.email)
+      console.log(this.profile)
     },
   },
   async mounted() {
@@ -18,12 +19,14 @@ export default {
   },
   watch: {
     async $route(to, from) {
+      console.log("watch")
       this.reload();
     },
   },
   computed: {
     username() {
       if (this.profile) {
+        console.log(this.profile)
         return this.profile["username"];
       }
       return null;

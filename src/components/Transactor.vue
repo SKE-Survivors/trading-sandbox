@@ -107,7 +107,7 @@ export default {
       }
     },
     async commitTransaction(currency, flag, type) {
-      if (!localStorage.token || localStorage.token == 'null') {
+      if (!localStorage.token) {
         window.alert("Log in first to do transaction")
         return
       }

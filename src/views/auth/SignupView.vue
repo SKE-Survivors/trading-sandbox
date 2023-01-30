@@ -23,6 +23,7 @@ export default {
         );
         localStorage.token = res;
         localStorage.email = this.email;
+        localStorage.username = this.username
         this.$router.push("/");
       } catch (error) {
         let message = ""
