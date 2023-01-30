@@ -100,10 +100,7 @@ export default {
       this.balance = await this.user.getBalance();
     },
     async commitTransaction(currency, flag, type) {
-      // try {
-
-
-      if (!localStorage.token) {
+      if (!localStorage.token || localStorage.token =='null') {
         window.alert("Log in first to do transaction")
         return
       }
@@ -131,7 +128,8 @@ export default {
         }
       }
 
-
+      // todo: remove balance checking, coz it will be checked in api anyway
+      // but don't forget to show alert from api (coz there are many more errors to be checked)
       if (balance[quoteCurrency] >= quoteAsset) {
         this.updateTransaction(
           flag,
@@ -150,9 +148,6 @@ export default {
 
       console.log(await this.user.getBalance());
       this.resetAsset();
-      // } catch (error) {
-      //   window.alert("Our server is currently down at the moment, please come back later. We apologize for the inconvenience.")
-      // }
     },
     getTokenUrl(n) {
       let currencies = this.symbol.toLowerCase().split("/");
@@ -233,6 +228,7 @@ export default {
     </div>
     <button
       class="form-control btn"
+      type="button"
       @click="
         commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)
       "
