@@ -15,6 +15,7 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("email");
       localStorage.removeItem("username");
+      console.log("logout", localStorage.removeItem("email"), localStorage.removeItem("token"))
       this.$router.push("/");
     } catch (error) {
       window.alert("Something went wrong");

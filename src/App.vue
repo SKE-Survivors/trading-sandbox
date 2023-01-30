@@ -17,7 +17,6 @@ export default {
   },
   watch: {
     async $route(to, from) {
-      console.log("watch")
       this.reload();
     },
   },

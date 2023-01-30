@@ -28,6 +28,11 @@ export default {
 </script>
 
 <template>
+  <!-- <div id="loader">
+    <div id="loader-content">
+      <img src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif">
+    </div>
+  </div> -->
   <div class="inc my-5 container">
     <div class="col v-center">
       <h1>{{ profile["username"] }}</h1>
@@ -40,11 +45,7 @@ export default {
   </div>
 
   <div class="section">
-    <div
-      class="inc card my-2"
-      v-for="(balance, token) in profile['wallet']"
-      :key="balance"
-    >
+    <div class="inc card my-2" v-for="(balance, token) in profile['wallet']" :key="balance">
       <div class="row">
         <div class="col v-center">
           <img :src="getTokenUrl(token)" alt="" class="token-icon" />
@@ -60,7 +61,9 @@ export default {
       <div class="row center">
         <div class="col v-center">#{{ order.id }}</div>
         <div class="col v-center">
-          <div class="status-dot"><div class="dot" :class="order.status"></div></div>
+          <div class="status-dot">
+            <div class="dot" :class="order.status"></div>
+          </div>
           <div class="status-text">{{ toCapitalize(order.status) }}</div>
         </div>
         <div class="col v-center">{{ toCapitalize(order.flag) }}</div>
@@ -110,6 +113,7 @@ export default {
   width: 30%;
   float: left;
 }
+
 .status-text {
   width: 60%;
   float: right;
@@ -119,8 +123,30 @@ export default {
   .status-dot {
     width: 100%;
   }
+
   .status-text {
     display: none;
   }
+}
+
+#loader {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+
+}
+
+#loader-content {
+  margin: 15% auto; 
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>

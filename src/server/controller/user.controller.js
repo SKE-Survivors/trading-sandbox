@@ -72,28 +72,30 @@ export class UserController {
     return res["data"]["data"]
   }
 
-  async getBalance() {
-    var res = await this.getUserData(this.email)
+  async getBalance(email) {
+    var res = await this.getUserData(email)
     return res["wallet"]
   }
 
-  async getTransactionsHistory() {
-    var res = await this.getUserData(this.email)
+  async getTransactionsHistory(email) {
+    var res = await this.getUserData(email)
     return res["orders"]
   }
 
-  async updateUserBalance(currency, amount) {
-    var res = await this.getUserData(this.email)
+  async updateUserBalance(email, token, currency, amount) {
+    var res = await this.getUserData(email)
     res["wallet"][currency] = amount
     await axios.put(
       `${
-        this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token
+        this.url + "/api/auth/user?email=" + email + "&token=" + token
       }`,
       res
     )
   }
 
   async addUserTransaction(
+    email,
+    token,
     status,
     transaction,
     currency,
@@ -101,6 +103,7 @@ export class UserController {
     baseAsset
   ) {
     let body = {
+      user_email: email,
       status: status,
       flag: transaction,
       pair_symbol: currency,
@@ -111,9 +114,9 @@ export class UserController {
       `${
         this.url +
         "/api/trading/order?email=" +
-        this.email +
+        email +
         "&token=" +
-        this.token
+        token
       }`,
       body
     )
@@ -122,7 +125,7 @@ export class UserController {
     return resBody["MESSAGE"]
   }
 
-  async sendTrigger(transaction, currency, quoteAsset, baseAsset, stop_price) {
+  async sendTrigger(email, token, transaction, currency, quoteAsset, baseAsset, stop_price) {
     let body = {
       flag: transaction,
       pair_symbol: currency,
@@ -134,9 +137,9 @@ export class UserController {
       `${
         this.url +
         "/api/trading/trigger?email=" +
-        this.email +
+        email +
         "&token=" +
-        this.token
+        token
       }`,
       body
     )

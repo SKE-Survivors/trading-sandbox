@@ -65,36 +65,42 @@ export default {
       limit
     ) {
       let response_msg
+      loader.style.display = 'none'
       try {
         if (type == "stop") {
-          response_msg = await this.user.sendTrigger(flag, currency, Number(quoteAsset), Number(baseAsset), limit)
+          response_msg = await this.user.sendTrigger(localStorage.getItem("email"), localStorage.getItem("token"), flag, currency, Number(quoteAsset), Number(baseAsset), limit)
         } else {
           let status = "finished"
           if (type == "limit") {
             status = "active"
           }
           response_msg = await this.user.addUserTransaction(
+            localStorage.getItem("email"),
+            localStorage.getItem("token"),
             status,
             flag,
             currency,
             Number(quoteAsset),
             Number(baseAsset)
           )
-
           if (type == "market") {
 
             await this.user.updateUserBalance(
+              localStorage.getItem("email"),
+              localStorage.getItem("token"),
               quoteCurrency,
               Number(balance[quoteCurrency]) - Number(quoteAsset)
             );
             await this.user.updateUserBalance(
+              localStorage.getItem("email"),
+              localStorage.getItem("token"),
               baseCurrency,
               Number(balance[baseCurrency]) + Number(baseAsset)
             );
           }
           window.alert(response_msg)
         }
-        this.balance = await this.user.getBalance();
+        this.balance = await this.user.getBalance(localStorage.getItem("email"));
       }
       catch (error) {
         let message = ""
@@ -107,12 +113,14 @@ export default {
       }
     },
     async commitTransaction(currency, flag, type) {
+      const loader = document.querySelector('#loader')
+      loader.style.display = 'block'
       if (!localStorage.getItem("token")) {
         window.alert("Log in first to do transaction")
         return
       }
       const baseQuoteCurrencies = currency.split("/");
-      const balance = await this.user.getBalance()
+      const balance = await this.user.getBalance(localStorage.getItem("email"))
 
       let quoteCurrency, baseCurrency;
       let quoteAsset, baseAsset, limit
@@ -158,6 +166,11 @@ export default {
 </script>
 
 <template>
+  <div id="loader">
+    <div id="loader-content">
+      <img src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif">
+    </div>
+  </div>
   <form class="card">
     <div class="title my-2">
       <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
@@ -233,4 +246,26 @@ select {
   display: inline-block;
   margin: 0 4px;
 }
+
+#loader {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+
+}
+
+#loader-content {
+  margin: 15% auto; 
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 </style>

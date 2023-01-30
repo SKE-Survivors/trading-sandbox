@@ -15,6 +15,8 @@ export default {
   methods: {
     async sendForm() {
       try {
+        const loader = document.querySelector('#loader')
+        loader.style.display = 'block'
         var res = await userController.signup(
           this.email,
           this.username,
@@ -24,6 +26,7 @@ export default {
         localStorage.setItem('token', res);
         localStorage.setItem('email', this.email);
         localStorage.setItem('username', this.username);
+        loader.style.display = 'none'
         this.$router.push("/");
       } catch (error) {
         let message = ""
@@ -40,6 +43,12 @@ export default {
 </script>
 
 <template>
+  <div id="loader">
+    <div id="loader-content">
+      <img
+        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif">
+    </div>
+  </div>
   <div class="container">
     <form class="card my-5">
       <h1>Sign up</h1>
@@ -67,5 +76,26 @@ export default {
   margin: auto;
   width: 30%;
   min-width: 400px;
+}
+
+#loader {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+
+}
+
+#loader-content {
+  margin: 15% auto; 
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>
