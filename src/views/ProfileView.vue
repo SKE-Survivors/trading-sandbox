@@ -1,7 +1,7 @@
 <script>
 import { UserController } from "../server/controller/user.controller";
 
-let userController = new UserController(localStorage.token, localStorage.email);
+let userController = new UserController(localStorage.getItem("token"), localStorage.getItem("email"));
 
 export default {
   data() {
@@ -12,7 +12,7 @@ export default {
     };
   },
   async created() {
-    this.profile = await userController.getUserData(localStorage.email).catch(() => {
+    this.profile = await userController.getUserData(localStorage.getItem("email")).catch(() => {
       this.$router.push({ name: "login" });
     });
   },

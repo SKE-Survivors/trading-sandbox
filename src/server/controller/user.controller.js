@@ -62,10 +62,8 @@ export class UserController {
 
   async getUserData(email) {
     if (!email) {
-      console.log("in null")
       return null
     }
-    console.log(email)
     var res = await axios
       .get(`${this.url + "/api/auth/user?email=" + email}`)
       .catch(() => {

@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       selectedPair: "BTC/USDT",
-      email: localStorage.email,
+      email: localStorage.getItem("email"),
     };
   },
   components: {

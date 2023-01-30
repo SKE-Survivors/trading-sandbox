@@ -35,8 +35,8 @@ export default {
     async LoginThirdParty(third_party) {
       try {
         let res = await userController.login_third_party(third_party)
-        localStorage.token = res;
-        localStorage.email = this.email;
+        localStorage.setItem("token", res)
+        localStorage.setItem("email", this.email)
         this.$router.push("/");
       } catch (error) {
         window.alert("Something went wrong")

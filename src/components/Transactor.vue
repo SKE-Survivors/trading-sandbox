@@ -2,7 +2,7 @@
 import axios from "axios";
 import { UserController } from "../server/controller/user.controller";
 
-let userController = new UserController(localStorage.token, localStorage.email)
+let userController = new UserController(localStorage.getItem("token"), localStorage.getItem("email"))
 
 export default {
   props: ["symbol"],
@@ -107,7 +107,7 @@ export default {
       }
     },
     async commitTransaction(currency, flag, type) {
-      if (!localStorage.token) {
+      if (!localStorage.getItem("token")) {
         window.alert("Log in first to do transaction")
         return
       }

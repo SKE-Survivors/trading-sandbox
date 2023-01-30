@@ -6,7 +6,7 @@ let userController = new UserController();
 export default {
   data() {
     return {
-      email: localStorage.email,
+      email: localStorage.getItem("email"),
     };
   },
   async created() {
