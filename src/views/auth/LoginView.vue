@@ -70,7 +70,7 @@ export default {
       <div class="center hint-color my-3">----------- or -----------</div>
 
       <!-- todo: login with facebook -->
-      <button type="button" class="form-control btn" @click="LoginThirdParty('github')" style="background-color: black; color:white;">
+      <button type="button" class="form-control btn" @click="LoginThirdParty('github')" style="background-color: #24292f; color:white;">
         <font-awesome-icon :icon="['fab', 'github']" class="field-icon" />
         Login with Github
       </button>
