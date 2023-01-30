@@ -107,7 +107,7 @@ export class UserController {
       input_amount: quoteAsset,
       output_amount: baseAsset,
     }
-    await axios.post(
+    const res = await axios.post(
       `${
         this.url +
         "/api/trading/order?email=" +
@@ -118,9 +118,8 @@ export class UserController {
       body
     )
 
-    // var res = await this.getUserData()
-    // res["orders"].push(body)
-    // await axios.put(`${this.url + "/api/auth/user?email=" + this.email + "&token=" + this.token}`, res)
+    const resBody = res["data"]
+    return resBody["MESSAGE"]
   }
 
   async sendTrigger(transaction, currency, quoteAsset, baseAsset, stop_price) {
@@ -131,7 +130,7 @@ export class UserController {
       output_amount: baseAsset,
       stop_price: stop_price,
     }
-    await axios.post(
+    const res = await axios.post(
       `${
         this.url +
         "/api/trading/trigger?email=" +
@@ -141,5 +140,8 @@ export class UserController {
       }`,
       body
     )
+
+    const resBody = res["data"]
+    return resBody["MESSAGE"]
   }
 }

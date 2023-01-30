@@ -23,15 +23,6 @@ export default {
         );
         localStorage.token = res;
         localStorage.email = this.email;
-  
-        // const storage = useStorage();
-  
-        // storage.clearStorageSync()
-        // storage.setStorageSync("token", res)
-        // console.log(storage.key())
-        // this.$storage.clearStorageSync()
-        // this.$storage.setStorageSync("token", res)
-        // console.log(this.$storage.Key("ts_token"))
         this.$router.push("/");
       } catch (error) {
         let message = ""

@@ -12,7 +12,6 @@ export default {
     };
   },
   async created() {
-    console.log("profile", localStorage.email)
     this.profile = await userController.getUserData(localStorage.email).catch(() => {
       this.$router.push({ name: "login" });
     });
