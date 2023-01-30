@@ -21,9 +21,9 @@ export default {
           this.password,
           this.confirmPassword
         );
-        localStorage.token = res;
-        localStorage.email = this.email;
-        localStorage.username = this.username
+        localStorage.setItem('token', res);
+        localStorage.setItem('email', this.email);
+        localStorage.setItem('username', this.username);
         this.$router.push("/");
       } catch (error) {
         let message = ""

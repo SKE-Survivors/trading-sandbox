@@ -34,8 +34,8 @@ export default {
       <h3>{{ profile["email"] }}</h3>
     </div>
     <div class="col v-center right">
-      <h3>+0.09%</h3>
-      <h3>19923.33 USDT</h3>
+      <h3>{{ profile["total_percent_change"] }}%</h3>
+      <h3>{{ profile["total_balance_usdt"] }} USDT</h3>
     </div>
   </div>
 
@@ -50,7 +50,7 @@ export default {
           <img :src="getTokenUrl(token)" alt="" class="token-icon" />
         </div>
         <div class="col v-center center">{{ balance }} {{ token.toUpperCase() }}</div>
-        <div class="col v-center right">+xxx%</div>
+        <div class="col v-center right">{{ profile["wallet_percent_change"][token] }}%</div>
       </div>
     </div>
 
