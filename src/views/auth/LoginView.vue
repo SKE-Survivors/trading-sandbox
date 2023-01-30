@@ -14,8 +14,10 @@ export default {
     async sendForm() {
       try {
         let res = await userController.login(this.email, this.password);
-        localStorage.token = res;
-        localStorage.email = this.email;
+        localStorage.setItem('token', res);
+        localStorage.setItem('email', this.email);
+        let userData = await userController.getUserData(this.email);
+        localStorage.setItem('username', userData["username"]);
         this.$router.push("/");
       } catch (error) {
         let message = ""

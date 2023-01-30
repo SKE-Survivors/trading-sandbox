@@ -10,16 +10,16 @@ export default {
     };
   },
   async created() {
-      try {
-        await userController.logout(this.email);
-        localStorage.token = null;
-        localStorage.email = null;
-        this.$router.push("/");
-        console.log("logout", localStorage.email)
-      } catch (error) {
-        window.alert("Something went wrong")
-      }
-    
+    try {
+      await userController.logout(this.email);
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("username");
+      this.$router.push("/");
+      console.log("logout", localStorage.email);
+    } catch (error) {
+      window.alert("Something went wrong");
+    }
   },
 };
 </script>
