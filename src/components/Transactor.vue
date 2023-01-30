@@ -97,6 +97,7 @@ export default {
       loader.style.display = "block";
 
       if (!localStorage.getItem("token")) {
+        loader.style.display = "none";
         window.alert("Log in first to do transaction");
         return;
       }
@@ -136,8 +137,7 @@ export default {
   <div id="loader">
     <div id="loader-content">
       <img
-        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif"
-      />
+        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif" />
     </div>
   </div>
   <form class="card">
@@ -148,64 +148,37 @@ export default {
     </div>
     <div class="row mt-1">
       <div class="col-8" style="padding-right: 0">
-        <select
-          required
-          name="type"
-          v-model="type"
-          @change="resetAsset"
-          class="form-control input-field"
-        >
+        <select required name="type" v-model="type" @change="resetAsset" class="form-control input-field">
           <option value="market">Market</option>
           <option value="limit">Limit</option>
           <option value="stop">Stop</option>
         </select>
       </div>
       <div class="col-4">
-        <select
-          required
-          name="transaction-flag"
-          @change="resetAsset"
-          v-model="transactionFlag"
-          class="form-control input-field"
-        >
+        <select required name="transaction-flag" @change="resetAsset" v-model="transactionFlag"
+          class="form-control input-field">
           <option value="Buy">Buy</option>
           <option value="Sell">Sell</option>
         </select>
       </div>
     </div>
     <div v-if="type == 'market'">
-      <label
-        >{{ transactionFlag }}: {{ transactionQuoteAsset }}
+      <label>{{ transactionFlag }}: {{ transactionQuoteAsset }}
         {{
-          transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0]
-        }}</label
-      >
-      <input
-        type="number"
-        v-model.number="transactionQuoteAsset"
-        @change="updateSymbolRate()"
-        class="form-control input-field"
-      />
-      <label
-        >Got: {{ transactionBaseAsset }}
+  transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0]
+        }}</label>
+      <input type="number" v-model.number="transactionQuoteAsset" @change="updateSymbolRate()"
+        class="form-control input-field" />
+      <label>Got: {{ transactionBaseAsset }}
         {{
-          transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
-        }}</label
-      >
+  transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
+        }}</label>
     </div>
     <div v-if="type != 'market'">
       <label>Price: {{ transactionLimit }} {{ symbol.split("/")[1] }}</label>
-      <input
-        type="number"
-        v-model.number="transactionLimit"
-        class="form-control input-field"
-      />
+      <input type="number" v-model.number="transactionLimit" class="form-control input-field" />
       <label>Amount: {{ transactionLimitAmount }} {{ symbol.split("/")[0] }}</label>
-      <input
-        type="number"
-        v-model.number="transactionLimitAmount"
-        class="form-control input-field"
-      />
+      <input type="number" v-model.number="transactionLimitAmount" class="form-control input-field" />
       <label>Total: {{ transactionTotalSpent }} {{ symbol.split("/")[1] }}</label>
     </div>
     <button class="form-control btn" type="button" @click="commitTransaction()">
@@ -221,8 +194,7 @@ export default {
 }
 
 select {
-  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
-    no-repeat;
+  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
   background-position: calc(100% - 0.75rem) center !important;
 }
 
