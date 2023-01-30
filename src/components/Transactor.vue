@@ -14,42 +14,39 @@ export default {
       user: userController,
       transactionFlag: "Buy",
       type: "market",
-      transaction: {
-        // cuurency to paid
-        quoteAsset: 0,
-        // currency that will get
-        baseAsset: 0,
-        limit: 0,
-        limit_amount: 0,
-        totalSpent: 0,
-      },
+      transactionQuoteAsset: 0, // cuurency to paid
+      transactionLimit: 0,
+      transactionLimitAmount: 0,
+      symbolRate: 1,
     };
+  },
+  computed: {
+    transactionBaseAsset() {
+      let quoteAsset = this.transactionQuoteAsset;
+      let rate = this.symbolRate;
+
+      let baseAsset = 0;
+      if (this.transactionFlag == "Buy") {
+        baseAsset = (quoteAsset / Number(rate)).toFixed(5);
+      } else {
+        baseAsset = (quoteAsset * Number(rate)).toFixed(5);
+      }
+      return baseAsset;
+    },
+    transactionTotalSpent() {
+      return (this.transactionLimitAmount * this.transactionLimit).toFixed(5);
+    },
   },
   methods: {
     resetAsset() {
-      this.transaction.quoteAsset = 0;
-      this.transaction.baseAsset = 0;
-      this.transaction.limit = 0;
-      this.transaction.limit_amount = 0;
-      this.transaction.totalSpent = 0;
+      this.transactionQuoteAsset = 0;
+      this.transactionLimit = 0;
+      this.transactionLimitAmount = 0;
     },
-    async rateDeterminer(currency) {
+    async updateSymbolRate() {
       const url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
-      const res = await axios.get(url + currency.replace("/", "").toUpperCase());
-      return res["data"]["lastPrice"];
-    },
-    async PreviewCoin(flag, currency, quoteAsset) {
-      const rate = await this.rateDeterminer(currency);
-      if (flag == "Buy") {
-        this.transaction.baseAsset = (quoteAsset / Number(rate)).toFixed(5);
-      } else if (flag == "Sell") {
-        this.transaction.baseAsset = (quoteAsset * Number(rate)).toFixed(5);
-      }
-    },
-    PreviewCoinWithLimit() {
-      this.transaction.totalSpent = (
-        this.transaction.limit_amount * this.transaction.limit
-      ).toFixed(5);
+      const res = await axios.get(url + this.symbol.replace("/", "").toUpperCase());
+      this.symbolRate = res["data"]["lastPrice"];
     },
     async updateTransaction(flag, currency, quoteAsset, baseAsset, type, limit) {
       loader.style.display = "none";
@@ -91,7 +88,11 @@ export default {
         }
       }
     },
-    async commitTransaction(currency, flag, type) {
+    async commitTransaction() {
+      let currency = this.symbol.toLowerCase();
+      let flag = this.transactionFlag;
+      let type = this.type;
+
       const loader = document.querySelector("#loader");
       loader.style.display = "block";
 
@@ -100,17 +101,17 @@ export default {
         return;
       }
 
-      let limit = this.transaction.limit;
-      let quoteAsset = this.transaction.quoteAsset;
-      let baseAsset = this.transaction.baseAsset;
+      let limit = this.transactionLimit;
+      let quoteAsset = this.transactionQuoteAsset;
+      let baseAsset = this.transactionBaseAsset;
 
       if (flag === "Buy" && type != "market") {
-        quoteAsset = this.transaction.totalSpent;
-        baseAsset = this.transaction.limit_amount;
+        quoteAsset = this.transactionTotalSpent;
+        baseAsset = this.transactionLimitAmount;
       }
       if (flag === "Sell" && type != "market") {
-        quoteAsset = this.transaction.limit_amount;
-        baseAsset = this.transaction.totalSpent;
+        quoteAsset = this.transactionLimitAmount;
+        baseAsset = this.transactionTotalSpent;
       }
 
       this.updateTransaction(
@@ -174,50 +175,40 @@ export default {
     </div>
     <div v-if="type == 'market'">
       <label
-        >{{ transactionFlag }}: {{ transaction.quoteAsset }}
+        >{{ transactionFlag }}: {{ transactionQuoteAsset }}
         {{
           transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0]
         }}</label
       >
       <input
         type="number"
-        v-model.number="transaction.quoteAsset"
-        @change="
-          PreviewCoin(this.transactionFlag, this.symbol, this.transaction.quoteAsset)
-        "
+        v-model.number="transactionQuoteAsset"
+        @change="updateSymbolRate()"
         class="form-control input-field"
       />
       <label
-        >Got: {{ transaction.baseAsset }}
+        >Got: {{ transactionBaseAsset }}
         {{
           transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
         }}</label
       >
     </div>
     <div v-if="type != 'market'">
-      <label>Price: {{ transaction.limit }} {{ symbol.split("/")[1] }}</label>
+      <label>Price: {{ transactionLimit }} {{ symbol.split("/")[1] }}</label>
       <input
         type="number"
-        v-model.number="transaction.limit"
-        @change="PreviewCoinWithLimit()"
+        v-model.number="transactionLimit"
         class="form-control input-field"
       />
-      <label>Amount: {{ transaction.limit_amount }} {{ symbol.split("/")[0] }}</label>
+      <label>Amount: {{ transactionLimitAmount }} {{ symbol.split("/")[0] }}</label>
       <input
         type="number"
-        v-model.number="transaction.limit_amount"
-        @change="PreviewCoinWithLimit()"
+        v-model.number="transactionLimitAmount"
         class="form-control input-field"
       />
-      <label>Total: {{ transaction.totalSpent }} {{ symbol.split("/")[1] }}</label>
+      <label>Total: {{ transactionTotalSpent }} {{ symbol.split("/")[1] }}</label>
     </div>
-    <button
-      class="form-control btn"
-      type="button"
-      @click="
-        commitTransaction(this.symbol.toLowerCase(), this.transactionFlag, this.type)
-      "
-    >
+    <button class="form-control btn" type="button" @click="commitTransaction()">
       Confirm
     </button>
   </form>
