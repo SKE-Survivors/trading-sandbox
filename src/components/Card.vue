@@ -1,70 +1,116 @@
 <script>
 import axios from "axios";
+
 export default {
-  props: [
-    'tradingCurrencies',
-    'symbol',
-  ],
+  props: ["tradingCurrencies"],
   data() {
     return {
       displayCurrency: this.tradingCurrencies.replace("-", "/").toUpperCase(),
       value: 0,
       percentChange: 0,
-      midPrice: 0
-    }
+      midPrice: 0,
+    };
+  },
+  computed: {
+    isNegative() {
+      return this.percentChange < 0;
+    },
   },
   async created() {
     const url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
     const res = await axios.get(
       url + this.tradingCurrencies.replace("-", "").toUpperCase()
-      );
-      this.value = Number(res["data"]["lastPrice"]).toFixed(2);
-      this.percentChange = Number(res["data"]["priceChangePercent"]).toFixed(2)
-      this.midPrice = Number(res["data"]["weightedAvgPrice"]).toFixed(2)
-      
-      new WebSocket('wss://stream.binance.com:9443/ws/' + this.tradingCurrencies.replace("-", "") + '@ticker')
-        .addEventListener('message', e => {
-          let data = JSON.parse(e.data) || {};
-          let { c, P, w } = data;
-  
-          this.value = Number(c).toFixed(2);
-          this.percentChange = Number(P).toFixed(2);
-          this.midPrice = Number(w).toFixed(2);
-        });
-  }
-}
+    );
+    this.setValue(Number(res["data"]["lastPrice"]));
+    this.percentChange = Number(res["data"]["priceChangePercent"]).toFixed(2);
+    this.midPrice = Number(res["data"]["weightedAvgPrice"]).toFixed(2);
+
+    new WebSocket(
+      "wss://stream.binance.com:9443/ws/" +
+        this.tradingCurrencies.replace("-", "") +
+        "@ticker"
+    ).addEventListener("message", (e) => {
+      let data = JSON.parse(e.data) || {};
+      let { c, P, w } = data;
+
+      this.setValue(Number(c));
+      this.percentChange = Number(P).toFixed(2);
+      this.midPrice = Number(w).toFixed(2);
+    });
+  },
+  methods: {
+    getTokenUrl(n) {
+      let currencies = this.tradingCurrencies.split("-");
+      return new URL(`../assets/images/token/${currencies[n]}.png`, import.meta.url).href;
+    },
+    setValue(v) {
+      if (v > 1000) {
+        this.value = v.toFixed(2);
+      } else if (v > 1) {
+        this.value = v.toFixed(3);
+      } else {
+        this.value = v.toFixed(5);
+      }
+    },
+  },
+};
 </script>
 
 <template>
-  <div id="card">
-    <font-awesome-icon icon="fa-solid fa-circle-half-stroke" style="height: 2em; width: 2em" />
-    <h1>{{ displayCurrency }}</h1>
-    <h2>{{ symbol }} {{ value }}</h2>
-    <h2> % {{ percentChange }}</h2>
-    <h2> mid price </h2>
-    <h2> {{ midPrice }} </h2>
+  <div class="card v-center">
+    <div class="row">
+      <div class="col-5 v-center">
+        <img :src="getTokenUrl(0)" alt="" class="token-icon v-center" />
+        <img :src="getTokenUrl(1)" alt="" class="token-icon v-center" />
+      </div>
+      <div class="col-4 v-center">
+        {{ displayCurrency }}
+        {{ value }}
+      </div>
+      <div class="col-3 center v-center text-green" :class="{ 'text-red': isNegative }">
+        {{ percentChange }}%
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-#card {
-  background: #dfc2f2;
-  background-image: linear-gradient(to right, #ffffb3, #ffe6e6);
-  background-attachment: fixed;
-  background-size: cover;
+.card {
+  height: 80px;
+  width: 240px;
 
-  box-shadow: 0 15px 30px 1px grey;
-  background: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  justify-content: center;
-  justify-items: center;
-  border-radius: 5px;
   overflow: hidden;
-  margin: 5% 10px 5% 10px;
-  width: 90%;
-  /* height: 150px; */
-  padding: 7px 10px 5px 10px;
-
   cursor: pointer;
+
+  font-size: calc(var(--font-size) - 3px);
+}
+
+.row {
+  height: 100%;
+  text-align: left;
+}
+
+.col-3,
+.col-4,
+.col-5 {
+  padding: 0;
+}
+
+.token-icon {
+  position: absolute;
+  margin-left: 6px;
+}
+
+img:nth-child(2) {
+  left: 36px;
+  z-index: -1;
+}
+
+.text-green {
+  color: #269981;
+}
+
+.text-red {
+  color: #ed303e;
 }
 </style>

@@ -12,12 +12,6 @@
 npm install
 ```
 
-### Start mock APIs for Development
-
-```sh
-npm run mockdb
-```
-
 ### Compile and Hot-Reload for Development
 
 ```sh

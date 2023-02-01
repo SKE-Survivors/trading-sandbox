@@ -1,0 +1,98 @@
+:root {
+  --font-size: calc(14px + 0.25vw);
+  --border-style: 0.05px solid rgba(255, 255, 255, 0.8);
+
+  --dark-text-color: #270a3d;
+}
+
+body {
+  /* background-image: linear-gradient(to right, #4A3080, #276F98, #3CB29A); */
+  background-image: linear-gradient(to right, #242442, #211441, #270a3d);
+  color: white;
+}
+
+.section {
+  background-image: url(@/assets/images/bg-section.png);
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 8px;
+}
+
+.menu {
+  height: 64px;
+  background-image: linear-gradient(to right, #1e594d, #182d48, #251840);
+  border-bottom: var(--border-style);
+}
+
+.menu-item {
+  display: inline-block;
+  padding: 16px;
+}
+
+.menu-item a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.card {
+  margin: 4px;
+  padding: 16px;
+
+  background-color: inherit;
+  border: var(--border-style);
+  border-radius: 12px;
+
+  font-size: var(--font-size);
+}
+
+.token-icon {
+  width: calc(42px + 0.25vw);
+  height: auto;
+  margin: 0;
+
+  background-color: white;
+  border-radius: 50%;
+}
+
+.center {
+  text-align: center;
+}
+
+.v-center {
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.right {
+  text-align: right;
+}
+
+form h1 {
+  text-align: center;
+  margin-bottom: 4%;
+}
+
+form label {
+  margin-left: 8px;
+  margin-top: 12px;
+}
+
+form .input-field {
+  background-color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+  border-radius: 8px;
+  color: var(--dark-text-color);
+}
+
+form .btn {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-top: 12px;
+  border-radius: 8px;
+  color: var(--dark-text-color);
+  font-size: var(--font-size);
+}
+
+form .btn:hover {
+  box-shadow: 0 0 4px white;
+}

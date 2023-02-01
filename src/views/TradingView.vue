@@ -6,7 +6,8 @@ import PriceChart2 from "@/components/PriceChart2.vue";
 export default {
   data() {
     return {
-      selectedPair: "BTCUSDT",
+      selectedPair: "BTC/USDT",
+      email: localStorage.getItem("email"),
     };
   },
   components: {
@@ -16,32 +17,27 @@ export default {
   },
   methods: {
     handleCardSelected(pair) {
-      this.selectedPair = pair.replace("-", "");
+      this.selectedPair = pair.replace("-", "/");
     },
   },
 };
 </script>
 
-
 <template>
+  <!-- <p>Hello, {{ email }}</p> -->
   <div class="row" style="width: 100%; height: 20%; margin: 0%">
     <CardContainer @selected="handleCardSelected" />
   </div>
 
-  <div class="row" style="width: 100%; margin: 0%">
-    <div class="col">
-      <PriceChart2 :symbol="selectedPair" />
+  <div class="row section" style="width: 100%; margin: 0%">
+    <div class="col-lg-9 col-sm-12 mb-3">
+      <PriceChart2 :symbol="selectedPair.replace('/', '')" />
     </div>
-    <div class="col">
-      <Transactor />
+    <div class="col-lg-3 col-sm-12 mb-3">
+      <Transactor :symbol="selectedPair" />
     </div>
   </div>
 </template>
 
 <style scoped>
-.chart {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-}
 </style>

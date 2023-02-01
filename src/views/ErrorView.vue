@@ -1,12 +1,14 @@
 <template>
   <div class="content center">
-    <h2>404</h2>
-    <h3>Page Not Found</h3>
+    <h2>Error</h2>
+    <h3>{{ err || "something wrong..." }}</h3>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["err"],
+};
 </script>
 
 <style scoped>
