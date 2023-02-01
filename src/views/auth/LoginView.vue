@@ -1,9 +1,13 @@
 <script>
+import {SemipolarSpinner} from 'epic-spinners'
 import { UserController } from "../../server/controller/user.controller";
 
 let userController = new UserController();
 
 export default {
+  components: {
+    SemipolarSpinner
+    },
   data() {
     return {
       email: null,
@@ -29,6 +33,7 @@ export default {
         } catch (error) {
           message = "Our server is currently down at the moment, please come back later. We apologize for the inconvenience."
         }
+        loader.style.display = 'none'
         window.alert(message)
       }
     },
@@ -51,8 +56,11 @@ export default {
 <template>
   <div id="loader">
     <div id="loader-content">
-      <img
-        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif">
+      <semipolar-spinner
+              :animation-duration="2000"
+              :size="100"
+              :color="'#b47ee5'"
+         />
     </div>
   </div>
   <div class="container">
