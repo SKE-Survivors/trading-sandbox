@@ -15,7 +15,12 @@ export default {
     const totalPair = await axios
       .get(import.meta.env.VITE_HOST + "/api/info/pairs")
       .catch((error) => {
-        this.$router.push({ name: "error" });
+        this.$router.push({
+          name: "error",
+          query: {
+            err: "Our server is currently down at the moment, please come back later.",
+          },
+        });
       });
     this.pairs = totalPair["data"]["MESSAGE"];
   },

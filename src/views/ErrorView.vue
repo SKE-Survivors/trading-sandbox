@@ -1,13 +1,18 @@
 <template>
   <div class="content center">
     <h2>Error</h2>
-    <h3>{{ err || "something wrong..." }}</h3>
+    <h3>{{ err || "something is wrong..." }}</h3>
   </div>
 </template>
 
 <script>
 export default {
   props: ["err"],
+  mounted() {
+    if (!this.err) {
+      this.$router.push({ name: "trading" });
+    }
+  },
 };
 </script>
 

@@ -4,11 +4,8 @@ import vue from "@vitejs/plugin-vue";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-
-  // ! note
-  console.log("env", env);
-  console.log("process.env", process.env);
-
+  // console.log("env", env);
+  // console.log("process.env", process.env);
   return {
     plugins: [vue()],
     resolve: {

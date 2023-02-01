@@ -36,9 +36,7 @@ const routes = [
   {
     path: "/error",
     name: "error",
-    props: {
-      err: "Our server is currently down at the moment, please come back later.",
-    },
+    props: (route) => ({ err: route.query.err }),
     component: ErrorView,
   },
   // catchall 404
