@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "mockdb": "json-server --watch src/database/db.json",
     "build": "vite build",
     "preview": "vite preview"
   },
