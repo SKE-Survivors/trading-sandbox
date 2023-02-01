@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import {SemipolarSpinner} from 'epic-spinners'
 import { UserController } from "../server/controller/user.controller";
 
 let userController = new UserController(
@@ -8,6 +9,9 @@ let userController = new UserController(
 );
 
 export default {
+  components: {
+    SemipolarSpinner
+    },
   props: ["symbol"],
   data() {
     return {
@@ -136,8 +140,13 @@ export default {
 <template>
   <div id="loader">
     <div id="loader-content">
-      <img
-        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif" />
+      <!-- <img
+        src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif" /> -->
+        <semipolar-spinner
+              :animation-duration="2000"
+              :size="100"
+              :color="'#b47ee5'"
+         />
     </div>
   </div>
   <form class="card">
