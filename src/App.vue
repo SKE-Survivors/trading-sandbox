@@ -27,7 +27,7 @@ export default {
       <router-link :to="{ name: 'trading' }">TradingArena</router-link>
     </h4>
 
-    <div class="menu-item dropdown" style="float: right">
+    <div class="menu-item dropdown" style="float: right;">
       <button class="dropdown-btn">
         {{ username || "Menu" }}<font-awesome-icon :icon="['fa', 'caret-down']" class="mx-2" />
       </button>
@@ -58,9 +58,9 @@ export default {
   position: relative;
   display: inline-block;
 
-  min-width: 20%;
-  max-width: 25%;
+  width: fit-content;
   text-align: right;
+  /* margin-right: 3%; */
 }
 
 .dropdown-btn {
