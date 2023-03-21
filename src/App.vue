@@ -60,7 +60,6 @@ export default {
 
   width: fit-content;
   text-align: right;
-  /* margin-right: 3%; */
 }
 
 .dropdown-btn {
