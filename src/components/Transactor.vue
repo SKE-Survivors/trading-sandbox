@@ -198,7 +198,7 @@ export default {
 
 <style scoped>
 .card {
-  height: 100%;
+  height: auto;
   min-height: 70vh;
 }
 
