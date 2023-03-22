@@ -78,7 +78,7 @@ export default {
   color: var(--dark-text-color);
   border-radius: 8px;
 
-  right: 0;
+  right: 5%;
   width: 100%;
   margin-top: -24px;
 }
