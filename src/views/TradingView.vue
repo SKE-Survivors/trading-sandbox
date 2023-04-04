@@ -78,4 +78,10 @@ export default {
   color: white;
   box-shadow: 0 0 4px white;
 }
+
+form .btn:focus, form .btn:active, form .btn:hover {
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 0 4px white;
+  color: white;
+}
 </style>
