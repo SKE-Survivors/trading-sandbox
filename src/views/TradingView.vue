@@ -1,7 +1,7 @@
 <script>
 import Transactor from "@/components/Transactor.vue";
 import CardContainer from "@/components/CardContainer.vue";
-import PriceChart2 from "@/components/PriceChart2.vue";
+import PriceChart from "@/components/PriceChart.vue";
 
 export default {
   data() {
@@ -13,7 +13,7 @@ export default {
   components: {
     CardContainer,
     Transactor,
-    PriceChart2,
+    PriceChart,
   },
   methods: {
     handleCardSelected(pair) {
@@ -31,7 +31,7 @@ export default {
 
   <div class="row section" style="width: 100%; margin: 0%">
     <div class="col-lg-9 col-sm-12 mb-3">
-      <PriceChart2 :symbol="selectedPair.replace('/', '')" />
+      <PriceChart :symbol="selectedPair.replace('/', '')" />
     </div>
     <div class="col-lg-3 col-sm-12 mb-3">
       <Transactor :symbol="selectedPair" />
