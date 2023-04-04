@@ -198,8 +198,8 @@ export default {
 
 <style scoped>
 .card {
-  height: 100%;
-  min-height: 70vh;
+  height: 80%;
+  min-height: 50vh;
 }
 
 select {

@@ -1,19 +1,10 @@
 <template>
-  <div class="chart" id="tradingview"></div>
+  <div class="chart" id="depthchart">This is Depth Chart for {{ symbol }}</div>
 </template>
 
 <script>
 function loadChart(symbol) {
-  let chart = new TradingView.widget({
-    autosize: true,
-    symbol: "BINANCE:" + symbol,
-    interval: "1",
-    timezone: "Asia/Bangkok",
-    theme: "dark",
-    enable_publishing: false,
-    container_id: "tradingview",
-  });
-  return chart;
+  // do something
 }
 
 export default {
