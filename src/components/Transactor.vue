@@ -174,21 +174,21 @@ export default {
     <div v-if="type == 'market'">
       <label>{{ transactionFlag }}: {{ transactionQuoteAsset }}
         {{
-  transactionFlag == "Buy" ? symbol.split("/")[1] : symbol.split("/")[0]
+  transactionFlag == "Buy" ? symbol.split("/")[1].toUpperCase() : symbol.split("/")[0].toUpperCase()
         }}</label>
       <input type="number" v-model.number="transactionQuoteAsset" @change="updateSymbolRate()"
         class="form-control input-field" />
-      <label>Got: {{ transactionBaseAsset }}
+      <label>Receive: {{ transactionBaseAsset == 0 ? "0" : transactionBaseAsset }}
         {{
-  transactionFlag == "Buy" ? symbol.split("/")[0] : symbol.split("/")[1]
+  transactionFlag == "Buy" ? symbol.split("/")[0].toUpperCase() : symbol.split("/")[1].toUpperCase()
         }}</label>
     </div>
     <div v-if="type != 'market'">
-      <label>Price: {{ transactionLimit }} {{ symbol.split("/")[1] }}</label>
+      <label>Limit: {{ transactionLimit }} {{ symbol.split("/")[1].toUpperCase() }}</label>
       <input type="number" v-model.number="transactionLimit" class="form-control input-field" />
-      <label>Amount: {{ transactionLimitAmount }} {{ symbol.split("/")[0] }}</label>
+      <label>{{ transactionFlag }}: {{ transactionLimitAmount }} {{ symbol.split("/")[0].toUpperCase() }}</label>
       <input type="number" v-model.number="transactionLimitAmount" class="form-control input-field" />
-      <label>Total: {{ transactionTotalSpent }} {{ symbol.split("/")[1] }}</label>
+      <label>Total: {{ transactionTotalSpent == 0 ? "0" : transactionTotalSpent}} {{ symbol.split("/")[1].toUpperCase() }}</label>
     </div>
     <button class="form-control btn" type="button" @click="commitTransaction()">
       Confirm
@@ -198,7 +198,7 @@ export default {
 
 <style scoped>
 .card {
-  height: 100%;
+  height: fit-content;
   min-height: 70vh;
 }
 

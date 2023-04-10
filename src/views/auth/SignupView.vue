@@ -73,8 +73,8 @@ export default {
       <label for="cpwd">Confirm Password</label>
       <input type="password" id="cpwd" name="cpwd" v-model="confirmPassword" class="form-control input-field"/>
 
-      <button type="button" @click="sendForm()" class="form-control btn mt-5">Confirm</button>
-      <small class="center">Already have an account? <router-link :to="{ name: 'login' }">Login</router-link></small>
+      <button type="button" @click="sendForm()" class="form-control btn mt-4">Confirm</button>
+      <small class="center" style="margin-top: 7px;">Already have an account? <router-link :to="{ name: 'login' }">Login</router-link></small>
     </form>
   </div>
 </template>
