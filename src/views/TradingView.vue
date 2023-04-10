@@ -3,6 +3,7 @@ import Transactor from "@/components/Transactor.vue";
 import CardContainer from "@/components/CardContainer.vue";
 import PriceChart from "@/components/PriceChart.vue";
 import DepthChart from "@/components/DepthChart.vue";
+import AssetDisplay from "@/components/AssetDisplay.vue";
 
 export default {
   data() {
@@ -17,6 +18,7 @@ export default {
     Transactor,
     PriceChart,
     DepthChart,
+    AssetDisplay
   },
   methods: {
     handleCardSelected(pair) {
@@ -62,6 +64,8 @@ export default {
         </button>
       </form>
       <Transactor :symbol="selectedPair" />
+      <h4>Balance</h4>
+      <AssetDisplay />
     </div>
   </div>
 </template>
