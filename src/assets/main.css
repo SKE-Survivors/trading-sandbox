@@ -93,6 +93,8 @@ form .btn {
   font-size: var(--font-size);
 }
 
-form .btn:hover {
+.btn:focus, .btn:active, .btn:hover {
+  border-color: rgba(255, 255, 255, 0);
   box-shadow: 0 0 4px white;
+  outline: none;
 }

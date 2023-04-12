@@ -1,7 +1,8 @@
 <script>
 import Transactor from "@/components/Transactor.vue";
 import CardContainer from "@/components/CardContainer.vue";
-import PriceChart2 from "@/components/PriceChart2.vue";
+import PriceChart from "@/components/PriceChart.vue";
+import DepthChart from "@/components/DepthChart.vue";
 import AssetDisplay from "@/components/AssetDisplay.vue";
 
 export default {
@@ -9,12 +10,14 @@ export default {
     return {
       selectedPair: "BTC/USDT",
       email: localStorage.getItem("email"),
+      showTradingView: true,
     };
   },
   components: {
     CardContainer,
     Transactor,
-    PriceChart2,
+    PriceChart,
+    DepthChart,
     AssetDisplay
   },
   mounted () {
@@ -23,6 +26,9 @@ export default {
   methods: {
     handleCardSelected(pair) {
       this.selectedPair = pair.replace("-", "/");
+    },
+    displayTradingView(show) {
+      this.showTradingView = show;
     },
   },
 };

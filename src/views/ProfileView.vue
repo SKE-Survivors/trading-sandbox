@@ -61,6 +61,17 @@ export default {
 
     <h3 class="inc my-4">Transaction</h3>
 
+    <div class="inc card my-2 tb-title">
+      <div class="row center">
+        <div class="col v-center"><strong>ID</strong></div>
+        <div class="col v-center"><strong>STATUS</strong></div>
+        <div class="col v-center"><strong>FLAG</strong></div>
+        <div class="col v-center"><strong>PAIR</strong></div>
+        <div class="col v-center"><strong>IN</strong></div>
+        <div class="col v-center"><strong>OUT</strong></div>
+      </div>
+    </div>
+
     <div class="inc card my-2" v-for="order in profile['orders']" :key="order">
       <div class="row center">
         <div class="col v-center">#{{ order.id }}</div>
@@ -151,5 +162,12 @@ export default {
   padding: 20px;
   display: flex;
   justify-content: center;
+}
+
+.tb-title {
+  /* background-color: rgb(255, 255, 255, 0.3); */
+  border: none;
+  margin: auto;
+  padding: 0;
 }
 </style>
