@@ -79,8 +79,8 @@ export default {
   border-radius: 8px;
 
   right: 5%;
-  width: 100%;
-  margin-top: -24px;
+  width: 200%;
+  margin-top: 2px;
 }
 
 .dropdown-content a:hover {

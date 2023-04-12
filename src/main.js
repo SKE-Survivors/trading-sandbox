@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 /* import specific icons */
 import { faCircleHalfStroke, faCaretDown } from "@fortawesome/free-solid-svg-icons"
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import mitt from 'mitt';
 /* add icons to the library */
 library.add(faCircleHalfStroke)
 library.add(faCaretDown)
@@ -19,4 +20,11 @@ library.add(fab)
 
 import "./assets/main.css"
 
-createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(router).use(Vue3Storage, {namespace: "ts_"}).mount("#app")
+const emitter = mitt();
+
+const app = createApp(App)
+app.component("font-awesome-icon", FontAwesomeIcon)
+app.use(router)
+app.use(Vue3Storage, {namespace: "ts_"})
+app.config.globalProperties.emitter = emitter
+app.mount("#app")

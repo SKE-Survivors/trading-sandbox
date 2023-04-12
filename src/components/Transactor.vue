@@ -128,6 +128,7 @@ export default {
         limit
       );
       this.resetAsset();
+      this.emitter.emit("updateEvent")
     },
     getTokenUrl(n) {
       let currencies = this.symbol.toLowerCase().split("/");

@@ -20,6 +20,9 @@ export default {
     DepthChart,
     AssetDisplay
   },
+  mounted () {
+    document.getElementById("right-display").className = this.email ? "col-lg-3 col-sm-12 mb-3" : "col-lg-4 col-sm-12 mb-3"
+  },
   methods: {
     handleCardSelected(pair) {
       this.selectedPair = pair.replace("-", "/");
@@ -38,34 +41,29 @@ export default {
   </div>
 
   <div class="row section" style="width: 100%; margin: 0%">
-    <div v-if="showTradingView" class="col-lg-9 col-sm-12 mb-3">
+    <div v-show="this.email" class="col-lg-1 col-sm-12 mb-3">
+      <AssetDisplay />
+    </div>
+    <div v-if="showTradingView" class="col-lg-8 col-sm-12 mb-3">
       <PriceChart :symbol="selectedPair.replace('/', '')" />
     </div>
-    <div v-else class="col-lg-9 col-sm-12 mb-3">
+    <div v-else class="col-lg-8 col-sm-12 mb-3">
       <DepthChart :symbol="selectedPair.replace('/', '')" />
     </div>
-    <div class="col-lg-3 col-sm-12 mb-3">
+    <!-- <div class="col-lg-3 col-sm-12 mb-3"> -->
+    <div id="right-display">
       <form class="card">
-        <button
-          @click="displayTradingView(true)"
-          class="form-control btn"
-          :class="{ 'btn-active': showTradingView }"
-          type="button"
-        >
+        <button @click="displayTradingView(true)" class="form-control btn" :class="{ 'btn-active': showTradingView }"
+          type="button">
           Trading View
         </button>
-        <button
-          @click="displayTradingView(false)"
-          class="form-control btn"
-          :class="{ 'btn-active': !showTradingView }"
-          type="button"
-        >
+        <button @click="displayTradingView(false)" class="form-control btn" :class="{ 'btn-active': !showTradingView }"
+          type="button">
           Depth
         </button>
       </form>
       <Transactor :symbol="selectedPair" />
-      <h4>Balance</h4>
-      <AssetDisplay />
+
     </div>
   </div>
 </template>
@@ -83,7 +81,9 @@ export default {
   box-shadow: 0 0 4px white;
 }
 
-form .btn:focus, form .btn:active, form .btn:hover {
+form .btn:focus,
+form .btn:active,
+form .btn:hover {
   background-color: rgba(255, 255, 255, 0);
   box-shadow: 0 0 4px white;
   color: white;

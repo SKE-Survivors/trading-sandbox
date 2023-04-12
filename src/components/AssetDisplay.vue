@@ -1,6 +1,7 @@
 <script>
 import { UserController } from "../server/controller/user.controller";
 
+
 let userController = new UserController(
   localStorage.getItem("token"),
   localStorage.getItem("email")
@@ -12,12 +13,11 @@ export default {
       profile: {},
     };
   },
-  async beforeCreate() {
-    this.profile = await userController
-      .getUserData(localStorage.getItem("email"))
-      .catch(() => {
-        this.$router.push({ name: "login" });
-      });
+  async mounted() {
+    this.profile = await this.callProfile()
+    this.emitter.on("updateEvent", async update => {
+      this.profile = await this.callProfile()
+    })
   },
   methods: {
     getTokenUrl(token) {
@@ -26,23 +26,26 @@ export default {
     toCapitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     },
+    async callProfile() {
+      return userController
+        .getUserData(localStorage.getItem("email"))
+        .catch(() => {
+          this.$router.push({ name: "login" });
+        });
+    }
   },
 };
 </script>
 <template>
-    <div
-      class="inc card my-2"
-      v-for="(balance, token) in profile['wallet']"
-      :key="balance"
-    >
-      <div class="row">
-        <div class="col v-center">
-          <img :src="getTokenUrl(token)" alt="" class="token-icon" />
-        </div>
-        <div class="col v-center center">{{ balance }} {{ token.toUpperCase() }}</div>
-        <div class="col v-center right">
-          {{ profile["wallet_percent_change"][token].toFixed(2) }}%
-        </div>
+  <h4 class="center">Balance</h4>
+  <div class="card my-2" style="max-width: 200px;" v-for="(balance, token) in profile['wallet']" :key="balance">
+    <div class="row">
+      <div class="col center">
+        <img :src="getTokenUrl(token)" alt="" class="token-icon" />
+      </div>
+      <div class="col center">
+        {{ balance % 1 != 0 ? balance.toFixed(5) : balance }}
       </div>
     </div>
+  </div>
 </template>
