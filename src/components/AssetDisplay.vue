@@ -11,12 +11,15 @@ export default {
   data() {
     return {
       profile: {},
+      balance: {}
     };
   },
   async mounted() {
     this.profile = await this.callProfile()
+    this.balance = this.profile['wallet']
     this.emitter.on("updateEvent", async update => {
       this.profile = await this.callProfile()
+      this.balance = this.profile['wallet']
     })
   },
   methods: {
@@ -32,16 +35,25 @@ export default {
         .catch(() => {
           this.$router.push({ name: "login" });
         });
-    }
+    },
   },
 };
 </script>
 <template>
-  <h4 class="center">Balance</h4>
-  <div class="card my-2" style="max-width: 200px;" v-for="(balance, token) in profile['wallet']" :key="balance">
+  <!-- <div class="card my-2" style="max-width: 200px;" v-for="(balance, token) in profile['wallet']" :key="balance">
     <div class="row">
       <div class="col center">
-        <img :src="getTokenUrl(token)" alt="" class="token-icon" />
+        <img :src="getTokenUrl(token)" alt="" class="token-icon" style="max-width: 30px; margin: 2%"/>
+      </div>
+      <div class="col center">
+        {{ balance % 1 != 0 ? balance.toFixed(5) : balance }}
+      </div>
+    </div>
+  </div> -->
+  <div class="card my-2" style="max-width: 200px;" v-for="(balance, token) in this.balance" :key="balance">
+    <div class="row">
+      <div class="col center">
+        <img :src="getTokenUrl(token)" alt="" class="token-icon" style="max-width: 30px; margin: 2%"/>
       </div>
       <div class="col center">
         {{ balance % 1 != 0 ? balance.toFixed(5) : balance }}

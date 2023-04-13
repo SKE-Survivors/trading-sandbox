@@ -41,13 +41,16 @@ export default {
   </div>
 
   <div class="row section" style="width: 100%; margin: 0%">
-    <div v-show="this.email" class="col-lg-1 col-sm-12 mb-3">
-      <AssetDisplay />
+    <div v-show="this.email" class="col-lg-2 col-sm-12 mb-3" style="justify-content: center;">
+      <h4 class="center">Balance</h4>
+      <div id="adisplay">
+        <AssetDisplay />
+      </div>
     </div>
-    <div v-if="showTradingView" class="col-lg-8 col-sm-12 mb-3">
+    <div v-show="showTradingView" class="col-lg-7 col-sm-12 mb-3">
       <PriceChart :symbol="selectedPair.replace('/', '')" />
     </div>
-    <div v-else class="col-lg-8 col-sm-12 mb-3">
+    <div v-show="!showTradingView" class="col-lg-7 col-sm-12 mb-3">
       <DepthChart :symbol="selectedPair.replace('/', '')" />
     </div>
     <!-- <div class="col-lg-3 col-sm-12 mb-3"> -->
@@ -69,6 +72,13 @@ export default {
 </template>
 
 <style scoped>
+
+@media (max-width: 1000px) {
+  #adisplay {
+    display: flex;
+    justify-content: center;
+  }
+}
 .card {
   margin-top: 0;
   padding-top: 0;
