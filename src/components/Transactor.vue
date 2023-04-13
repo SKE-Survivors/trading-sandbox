@@ -83,6 +83,7 @@ export default {
         );
         window.alert(response_msg);
       } catch (error) {
+        console.error(error);
         try {
           window.alert(error["response"]["data"]["MESSAGE"]);
         } catch (error) {

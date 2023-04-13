@@ -33,6 +33,7 @@ export default {
         loader.style.display = 'none'
         this.$router.push("/");
       } catch (error) {
+        console.error(error);
         let message = ""
         try {
           message = error["response"]["data"]["MESSAGE"]

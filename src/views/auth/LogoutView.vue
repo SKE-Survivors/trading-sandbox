@@ -17,6 +17,7 @@ export default {
       localStorage.removeItem("username");
       this.$router.push("/");
     } catch (error) {
+      console.error(error);
       window.alert("Something went wrong");
     }
   },
