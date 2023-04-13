@@ -1,5 +1,5 @@
 // import {DBAdapter} from "../adapter/db.adapter"
-import axios from "axios"
+import axios from "axios";
 
 // Instead of getting it from db or memory
 // Will shoot to database API
@@ -9,9 +9,9 @@ import axios from "axios"
 // database that can use find functionalities
 export class UserController {
   constructor(token = null, email = null) {
-    this.url = import.meta.env.VITE_HOST
-    this.token = token
-    this.email = email
+    this.url = import.meta.env.VITE_HOST;
+    this.token = token;
+    this.email = email;
   }
 
   async signup(email, username, pwd, cpwd) {
@@ -20,61 +20,52 @@ export class UserController {
       username: username,
       password: pwd,
       "confirm-password": cpwd,
-    }
-    await axios.post(`${this.url + "/api/auth/signup"}`, body)
-    const res = await this.login(email, pwd)
-    return res
+    };
+    await axios.post(`${this.url + "/api/auth/signup"}`, body);
+    const res = await this.login(email, pwd);
+    return res;
   }
 
   async login(email, pwd) {
     let body = {
       email: email,
       password: pwd,
-    }
+    };
 
-    const res = await axios.post(`${this.url + "/api/auth/login"}`, body)
-    const resBody = res["data"]
-    this.token = resBody["MESSAGE"]["token"]
-    this.email = email
-    return resBody["MESSAGE"]["token"]
+    const res = await axios.post(`${this.url + "/api/auth/login"}`, body);
+    const resBody = res["data"];
+    this.token = resBody["MESSAGE"]["token"];
+    this.email = email;
+    return resBody["MESSAGE"]["token"];
   }
 
   async login_third_party(third_party) {
-    const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*" 
-      }
-    }
-    const res = await axios.get(`${this.url + "/api/auth/login/" + third_party}`, config)
-    const resBody = res["data"]
-    this.token = resBody["MESSAGE"]["token"]
-    this.email = email
-    return resBody["MESSAGE"]["token"]
+    window.location.href = this.url + "/api/auth/login/" + third_party;
   }
 
   async logout(email) {
     const res = await axios.get(
       `${this.url + "/api/auth/logout?email=" + email}`
-    )
-    const resBody = res["data"]
-    return resBody["MESSAGE"]
+    );
+    const resBody = res["data"];
+    return resBody["MESSAGE"];
   }
 
   async getUserData(email) {
     if (!email) {
-      return null
+      return null;
     }
     var res = await axios
       .get(`${this.url + "/api/auth/user?email=" + email}`)
       .catch(() => {
-        return
-      })
-    return res["data"]["data"]
+        return;
+      });
+    return res["data"]["data"];
   }
 
   async getTransactionsHistory(email) {
-    var res = await this.getUserData(email)
-    return res["orders"]
+    var res = await this.getUserData(email);
+    return res["orders"];
   }
 
   async addUserTransaction(
@@ -93,42 +84,38 @@ export class UserController {
       pair_symbol: currency,
       input_amount: quoteAsset,
       output_amount: baseAsset,
-    }
+    };
     const res = await axios.post(
-      `${
-        this.url +
-        "/api/trading/order?email=" +
-        email +
-        "&token=" +
-        token
-      }`,
+      `${this.url + "/api/trading/order?email=" + email + "&token=" + token}`,
       body
-    )
+    );
 
-    const resBody = res["data"]
-    return resBody["MESSAGE"]
+    const resBody = res["data"];
+    return resBody["MESSAGE"];
   }
 
-  async sendTrigger(email, token, transaction, currency, quoteAsset, baseAsset, stop_price) {
+  async sendTrigger(
+    email,
+    token,
+    transaction,
+    currency,
+    quoteAsset,
+    baseAsset,
+    stop_price
+  ) {
     let body = {
       flag: transaction,
       pair_symbol: currency,
       input_amount: quoteAsset,
       output_amount: baseAsset,
       stop_price: stop_price,
-    }
+    };
     const res = await axios.post(
-      `${
-        this.url +
-        "/api/trading/trigger?email=" +
-        email +
-        "&token=" +
-        token
-      }`,
+      `${this.url + "/api/trading/trigger?email=" + email + "&token=" + token}`,
       body
-    )
+    );
 
-    const resBody = res["data"]
-    return resBody["MESSAGE"]
+    const resBody = res["data"];
+    return resBody["MESSAGE"];
   }
 }
