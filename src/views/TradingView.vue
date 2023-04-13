@@ -21,7 +21,7 @@ export default {
     AssetDisplay
   },
   mounted () {
-    document.getElementById("right-display").className = this.email ? "col-lg-3 col-sm-12 mb-3" : "col-lg-4 col-sm-12 mb-3"
+    document.getElementById("right-display").className = this.email ? "col-lg-3 col-sm-12 mb-3" : "col-lg-5 col-sm-12 mb-3"
   },
   methods: {
     handleCardSelected(pair) {

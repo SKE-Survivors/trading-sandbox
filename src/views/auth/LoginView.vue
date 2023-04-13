@@ -84,7 +84,7 @@ export default {
         </div>
       </div>
 
-      <div class="center hint-color my-3">----------- or -----------</div>
+      <!-- <div class="center hint-color my-3">----------- or -----------</div>
 
       <button type="button" class="form-control btn" @click="LoginThirdParty('github')"
         style="background-color: #24292f; color:white;">
@@ -95,7 +95,7 @@ export default {
         style="background-color: #DF4A32; color:white;">
         <font-awesome-icon :icon="['fab', 'google']" class="field-icon" />
         Login with Google
-      </button>
+      </button> -->
     </form>
   </div>
 </template>
