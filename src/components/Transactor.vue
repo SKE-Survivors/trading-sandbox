@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import {SemipolarSpinner} from 'epic-spinners'
+import { SemipolarSpinner } from "epic-spinners";
 import { UserController } from "../server/controller/user.controller";
 
 let userController = new UserController(
@@ -10,8 +10,8 @@ let userController = new UserController(
 
 export default {
   components: {
-    SemipolarSpinner
-    },
+    SemipolarSpinner,
+  },
   props: ["symbol"],
   data() {
     return {
@@ -39,6 +39,14 @@ export default {
     },
     transactionTotalSpent() {
       return (this.transactionLimitAmount * this.transactionLimit).toFixed(5);
+    },
+  },
+  mounted() {
+    this.updateSymbolRate();
+  },
+  watch: {
+    symbol() {
+      this.updateSymbolRate();
     },
   },
   methods: {
@@ -129,7 +137,7 @@ export default {
         limit
       );
       this.resetAsset();
-      this.emitter.emit("updateEvent")
+      this.emitter.emit("updateEvent");
     },
     getTokenUrl(n) {
       let currencies = this.symbol.toLowerCase().split("/");
@@ -144,11 +152,7 @@ export default {
     <div id="loader-content">
       <!-- <img
         src="https://www.goldwell.com/content/dam/sites/kaousa/www-goldwell-com/content/master/global/goldwell-loader.gif" /> -->
-        <semipolar-spinner
-              :animation-duration="2000"
-              :size="100"
-              :color="'#b47ee5'"
-         />
+      <semipolar-spinner :animation-duration="2000" :size="100" :color="'#b47ee5'" />
     </div>
   </div>
   <form class="card">
@@ -159,38 +163,77 @@ export default {
     </div>
     <div class="row mt-1">
       <div class="col-8" style="padding-right: 0">
-        <select required name="type" v-model="type" @change="resetAsset" class="form-control input-field">
+        <select
+          required
+          name="type"
+          v-model="type"
+          @change="resetAsset"
+          class="form-control input-field"
+        >
           <option value="market">Market</option>
           <option value="limit">Limit</option>
           <option value="stop">Stop</option>
         </select>
       </div>
       <div class="col-4">
-        <select required name="transaction-flag" @change="resetAsset" v-model="transactionFlag"
-          class="form-control input-field">
+        <select
+          required
+          name="transaction-flag"
+          @change="resetAsset"
+          v-model="transactionFlag"
+          class="form-control input-field"
+        >
           <option value="Buy">Buy</option>
           <option value="Sell">Sell</option>
         </select>
       </div>
     </div>
     <div v-if="type == 'market'">
-      <label>{{ transactionFlag }}: {{ transactionQuoteAsset }}
+      <label
+        >{{ transactionFlag }}: {{ transactionQuoteAsset }}
         {{
-  transactionFlag == "Buy" ? symbol.split("/")[1].toUpperCase() : symbol.split("/")[0].toUpperCase()
-        }}</label>
-      <input type="number" v-model.number="transactionQuoteAsset" @change="updateSymbolRate()"
-        class="form-control input-field" />
-      <label>Receive: {{ transactionBaseAsset == 0 ? "0" : transactionBaseAsset }}
+          transactionFlag == "Buy"
+            ? symbol.split("/")[1].toUpperCase()
+            : symbol.split("/")[0].toUpperCase()
+        }}</label
+      >
+      <input
+        type="number"
+        v-model.number="transactionQuoteAsset"
+        @change="updateSymbolRate()"
+        class="form-control input-field"
+      />
+      <label
+        >Receive: {{ transactionBaseAsset == 0 ? "0" : transactionBaseAsset }}
         {{
-  transactionFlag == "Buy" ? symbol.split("/")[0].toUpperCase() : symbol.split("/")[1].toUpperCase()
-        }}</label>
+          transactionFlag == "Buy"
+            ? symbol.split("/")[0].toUpperCase()
+            : symbol.split("/")[1].toUpperCase()
+        }}</label
+      >
     </div>
     <div v-if="type != 'market'">
-      <label>Limit: {{ transactionLimit }} {{ symbol.split("/")[1].toUpperCase() }}</label>
-      <input type="number" v-model.number="transactionLimit" class="form-control input-field" />
-      <label>{{ transactionFlag }}: {{ transactionLimitAmount }} {{ symbol.split("/")[0].toUpperCase() }}</label>
-      <input type="number" v-model.number="transactionLimitAmount" class="form-control input-field" />
-      <label>Total: {{ transactionTotalSpent == 0 ? "0" : transactionTotalSpent}} {{ symbol.split("/")[1].toUpperCase() }}</label>
+      <label
+        >Limit: {{ transactionLimit }} {{ symbol.split("/")[1].toUpperCase() }}</label
+      >
+      <input
+        type="number"
+        v-model.number="transactionLimit"
+        class="form-control input-field"
+      />
+      <label
+        >{{ transactionFlag }}: {{ transactionLimitAmount }}
+        {{ symbol.split("/")[0].toUpperCase() }}</label
+      >
+      <input
+        type="number"
+        v-model.number="transactionLimitAmount"
+        class="form-control input-field"
+      />
+      <label
+        >Total: {{ transactionTotalSpent == 0 ? "0" : transactionTotalSpent }}
+        {{ symbol.split("/")[1].toUpperCase() }}</label
+      >
     </div>
     <button class="form-control btn" type="button" @click="commitTransaction()">
       Confirm
@@ -205,7 +248,8 @@ export default {
 }
 
 select {
-  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+    no-repeat;
   background-position: calc(100% - 0.75rem) center !important;
 }
 
