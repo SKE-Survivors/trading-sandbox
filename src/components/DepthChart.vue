@@ -10,7 +10,14 @@ export default {
       ws: null,
     };
   },
-  mounted() {
+  async mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute("nonce", "undefined");
+    plugin.setAttribute("src", "https://cdn.zingchart.com/zingchart.min.js");
+    plugin.async = true;
+    document.head.appendChild(plugin);
+
+    await new Promise((r) => setTimeout(r, 3000));
     this.loadChart(this.symbol);
   },
   watch: {
