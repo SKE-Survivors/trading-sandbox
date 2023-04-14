@@ -61,30 +61,40 @@ export default {
 
     <h3 class="inc my-4">Transaction</h3>
 
-    <div class="inc card my-2 tb-title">
-      <div class="row center">
-        <div class="col v-center"><strong>ID</strong></div>
-        <div class="col v-center"><strong>STATUS</strong></div>
-        <div class="col v-center"><strong>FLAG</strong></div>
-        <div class="col v-center"><strong>PAIR</strong></div>
-        <div class="col v-center"><strong>IN</strong></div>
-        <div class="col v-center"><strong>OUT</strong></div>
-      </div>
+    <div v-if="profile['orders'].length == 0" class="center mb-5">
+      you have no order yet
     </div>
-
-    <div class="inc card my-2" v-for="order in profile['orders']" :key="order">
-      <div class="row center">
-        <div class="col v-center">#{{ order.id }}</div>
-        <div class="col v-center">
-          <div class="status-dot">
-            <div class="dot" :class="order.status"></div>
-          </div>
-          <div class="status-text">{{ toCapitalize(order.status) }}</div>
+    <div v-else>
+      <div class="inc card my-2 tb-title">
+        <div class="row center">
+          <div class="col v-center"><strong>ID</strong></div>
+          <div class="col v-center"><strong>STATUS</strong></div>
+          <div class="col v-center"><strong>FLAG</strong></div>
+          <div class="col v-center"><strong>PAIR</strong></div>
+          <div class="col v-center"><strong>IN</strong></div>
+          <div class="col v-center"><strong>OUT</strong></div>
         </div>
-        <div class="col v-center">{{ toCapitalize(order.flag) }}</div>
-        <div class="col v-center">{{ order.pair_symbol.toUpperCase() }}</div>
-        <div class="col v-center">{{ order.input_amount }}</div>
-        <div class="col v-center">{{ order.output_amount }}</div>
+      </div>
+
+      <div class="inc card my-2" v-for="order in profile['orders']" :key="order">
+        <div class="row center">
+          <div class="col v-center">#{{ order.id }}</div>
+          <div class="col v-center">
+            <div class="status-dot">
+              <div class="dot" :class="order.status"></div>
+            </div>
+            <div class="status-text">
+              <div v-if="order.status == 'draft'">Stop Limit</div>
+              <div v-else>
+                {{ toCapitalize(order.status) }}
+              </div>
+            </div>
+          </div>
+          <div class="col v-center">{{ toCapitalize(order.flag) }}</div>
+          <div class="col v-center">{{ order.pair_symbol.toUpperCase() }}</div>
+          <div class="col v-center">{{ order.input_amount }}</div>
+          <div class="col v-center">{{ order.output_amount }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -115,6 +125,10 @@ export default {
 
 .cancel {
   background-color: #ababab;
+}
+
+.draft {
+  background-color: #f7ef85;
 }
 
 .dot {
